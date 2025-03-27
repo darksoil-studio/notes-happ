@@ -47,7 +47,7 @@ export class GroupInvitesStore extends PrivateEventSourcingStore<GroupInvitesEve
 				.filter(cellInfo => !('provisioned' in cellInfo))
 				.map(cellInfo => {
 					const cloned: ClonedCell = (cellInfo as any).cloned;
-					return cloned.clone_id;
+					return cloned.dna_modifiers.network_seed;
 				});
 		},
 	);

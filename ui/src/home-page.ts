@@ -16,6 +16,8 @@ import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 
 import { appStyles } from './app-styles.js';
+import './group-detail.js';
+import './group-list.js';
 
 @customElement('home-page')
 export class HomePage extends SignalWatcher(LitElement) {
@@ -39,9 +41,9 @@ export class HomePage extends SignalWatcher(LitElement) {
 			`,
 		},
 		{
-			path: 'group/:roleName',
+			path: 'group/:networkSeed/*',
 			render: params => html`
-				<group-detail .roleName=${params.roleName} style="flex: 1">
+				<group-detail .networkSeed=${params.networkSeed} style="flex: 1">
 				</group-detail>
 			`,
 		},
@@ -50,7 +52,7 @@ export class HomePage extends SignalWatcher(LitElement) {
 	renderContent() {
 		return html`
 			<div class="row" style="flex: 1; margin: 16px">
-				<div class="column">
+				<div class="column" style="flex-basis: 200px; gap: 16px">
 					<div class="row">
 						<sl-button
 							circle
@@ -67,12 +69,12 @@ export class HomePage extends SignalWatcher(LitElement) {
 					</div>
 					<group-list
 						@group-selected=${(e: CustomEvent) =>
-							this.routes.goto(`group/${e.detail.groupRoleName}`)}
+							this.routes.goto(`group/${e.detail.roleName}/`)}
 					>
 					</group-list>
 				</div>
 
-				${this.routes.outlet()} ${this.selectedGroupRoleName ? html`` : html``}
+				${this.routes.outlet()}
 			</div>
 		`;
 	}

@@ -28,7 +28,11 @@ export class OverlayPage extends SignalWatcher(LitElement) {
 
 	render() {
 		return html`
-			<div class="column fill">
+			<div
+				class="column fill"
+				style="background-color: #ededed;
+			"
+			>
 				<div class="row top-bar" style="gap: 8px">
 					<sl-icon-button
 						@click=${() =>

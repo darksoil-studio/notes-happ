@@ -92,7 +92,7 @@ export class CreateGroupProfile extends SignalWatcher(LitElement) {
 					bubbles: true,
 					detail: {
 						// groupProfileHash: record.actionHash,
-						roleName: info.clone_id,
+						networkSeed: fields.name,
 					},
 				}),
 			);
