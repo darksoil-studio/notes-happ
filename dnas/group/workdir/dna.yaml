@@ -1,0 +1,21 @@
+manifest_version: '1'
+name: group
+integrity:
+  network_seed: null
+  properties: null
+  origin_time: 1743078472950980
+  zomes:
+  - name: file_storage_integrity
+    hash: null
+    bundled: <NIX_PACKAGE>
+    dependencies: null
+    dylib: null
+coordinator:
+  zomes:
+  - name: file_storage
+    hash: null
+    bundled: <NIX_PACKAGE>
+    dependencies:
+    - name: file_storage_integrity
+    dylib: null
+lineage: []

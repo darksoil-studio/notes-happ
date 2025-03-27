@@ -1,0 +1,15 @@
+[package]
+name = "group_invites"
+version = "0.0.1"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+name = "group_invites"
+
+[dependencies]
+hdk = { workspace = true }
+serde = { workspace = true }
+group_invites_integrity = { workspace = true }
+
+private_event_sourcing = { git = "https://github.com/darksoil-studio/private-event-sourcing-zome", branch = "main-0.4"}
