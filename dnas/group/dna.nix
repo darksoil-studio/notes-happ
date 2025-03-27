@@ -29,6 +29,8 @@
           # This overrides all the "bundled" properties for the DNA manifest
           group_profile_integrity = self'.packages.group_profile_integrity;
           group_profile = self'.packages.group_profile;
+          notes_integrity = self'.packages.notes_integrity;
+          notes = self'.packages.notes;
         };
       };
   	};
