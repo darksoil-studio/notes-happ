@@ -1,3 +1,4 @@
+pub mod all_notes;
 pub mod note;
 use hdk::prelude::*;
 use notes_integrity::*;

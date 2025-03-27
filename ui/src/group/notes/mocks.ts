@@ -103,6 +103,21 @@ export class NotesZomeMock extends ZomeMock implements AppClient {
 
     return record;
   }
+
+  async get_all_notes(): Promise<Array<Link>> {
+    const records: Record[] = Array.from(this.notes.values()).map(r => r.revisions[r.revisions.length - 1]);
+    const base = await fakeEntryHash();
+    return Promise.all(records.map(async record => ({
+      base,
+      target: record.signed_action.hashed.hash,
+      author: record.signed_action.hashed.content.author,
+      timestamp: record.signed_action.hashed.content.timestamp,
+      zome_index: 0,
+      link_type: 0,
+      tag: new Uint8Array(),
+      create_link_hash: await fakeActionHash(),
+    })));
+  }
 }
 
 export async function sampleNote(client: NotesClient, partialNote: Partial<Note> = {}): Promise<Note> {

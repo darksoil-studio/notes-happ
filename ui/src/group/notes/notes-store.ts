@@ -26,4 +26,15 @@ export class NotesStore {
     allRevisions: allRevisionsOfEntrySignal(this.client, () => this.client.getAllRevisionsForNote(noteHash)),
     deletes: deletesForEntrySignal(this.client, noteHash, () => this.client.getAllDeletesForNote(noteHash)),
   }));
+
+  /** All Notes */
+
+  allNotes = pipe(
+    collectionSignal(
+      this.client,
+      () => this.client.getAllNotes(),
+      "AllNotes",
+    ),
+    allNotes => slice(this.notes, allNotes.map(l => l.target)),
+  );
 }

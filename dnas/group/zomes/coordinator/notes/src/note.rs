@@ -7,6 +7,13 @@ pub fn create_note(note: Note) -> ExternResult<Record> {
     let record = get(note_hash.clone(), GetOptions::default())?.ok_or(wasm_error!(
         WasmErrorInner::Guest("Could not find the newly created Note".to_string())
     ))?;
+    let path = Path::from("all_notes");
+    create_link(
+        path.path_entry_hash()?,
+        note_hash.clone(),
+        LinkTypes::AllNotes,
+        (),
+    )?;
     Ok(record)
 }
 
@@ -97,6 +104,17 @@ pub fn update_note(input: UpdateNoteInput) -> ExternResult<Record> {
 
 #[hdk_extern]
 pub fn delete_note(original_note_hash: ActionHash) -> ExternResult<ActionHash> {
+    let path = Path::from("all_notes");
+    let links = get_links(
+        GetLinksInputBuilder::try_new(path.path_entry_hash()?, LinkTypes::AllNotes)?.build(),
+    )?;
+    for link in links {
+        if let Some(hash) = link.target.into_action_hash() {
+            if hash == original_note_hash {
+                delete_link(link.create_link_hash)?;
+            }
+        }
+    }
     delete_entry(original_note_hash)
 }
 

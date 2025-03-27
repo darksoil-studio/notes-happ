@@ -66,4 +66,10 @@ export class NotesClient extends ZomeClient<NotesSignal> {
   getOldestDeleteForNote(originalNoteHash: ActionHash): Promise<SignedActionHashed<Delete> | undefined> {
     return this.callZome("get_oldest_delete_for_note", originalNoteHash);
   }
+
+  /** All Notes */
+
+  async getAllNotes(): Promise<Array<Link>> {
+    return this.callZome("get_all_notes", undefined);
+  }
 }
