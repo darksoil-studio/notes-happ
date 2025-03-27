@@ -27,5 +27,5 @@ roles:
       origin_time: null
       quantum_time: null
     installed_hash: null
-    clone_limit: 0
+    clone_limit: 10000
 allow_deferred_memproofs: false

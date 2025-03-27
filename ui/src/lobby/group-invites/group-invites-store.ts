@@ -2,6 +2,8 @@ import { PrivateEventSourcingStore } from '@darksoil-studio/private-event-sourci
 import {
 	ActionHash,
 	AgentPubKey,
+	CellInfo,
+	ClonedCell,
 	EntryHash,
 	NewEntryAction,
 	Record,
@@ -15,6 +17,7 @@ import {
 	immutableEntrySignal,
 	latestVersionOfEntrySignal,
 	liveLinksSignal,
+	mapCompleted,
 	pipe,
 } from '@tnesh-stack/signals';
 import {
@@ -25,6 +28,7 @@ import {
 	slice,
 } from '@tnesh-stack/utils';
 
+import { lazyLoadAndPoll } from '../../utils.js';
 import { GroupInvitesClient } from './group-invites-client.js';
 import { GroupInvitesEvent } from './types.js';
 
@@ -32,4 +36,19 @@ export class GroupInvitesStore extends PrivateEventSourcingStore<GroupInvitesEve
 	constructor(public client: GroupInvitesClient) {
 		super(client);
 	}
+
+	allGroups = mapCompleted(
+		lazyLoadAndPoll(() => this.client.client.appInfo(), 1000),
+		appInfo => {
+			const cellInfo = appInfo?.cell_info['group'];
+			if (!cellInfo) return [];
+
+			return Object.values(cellInfo)
+				.filter(cellInfo => !('provisioned' in cellInfo))
+				.map(cellInfo => {
+					const cloned: ClonedCell = (cellInfo as any).cloned;
+					return cloned.clone_id;
+				});
+		},
+	);
 }

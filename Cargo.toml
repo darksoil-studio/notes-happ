@@ -18,3 +18,9 @@ path = "dnas/lobby/zomes/coordinator/group_invites"
 
 [workspace.dependencies.group_invites_integrity]
 path = "dnas/lobby/zomes/integrity/group_invites"
+
+[workspace.dependencies.group_profile]
+path = "dnas/group/zomes/coordinator/group_profile"
+
+[workspace.dependencies.group_profile_integrity]
+path = "dnas/group/zomes/integrity/group_profile"

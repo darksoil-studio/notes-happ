@@ -345,6 +345,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "group_profile"
+version = "0.0.1"
+dependencies = [
+ "group_profile_integrity",
+ "hdk",
+ "serde",
+]
+
+[[package]]
+name = "group_profile_integrity"
+version = "0.0.1"
+dependencies = [
+ "hdi",
+ "serde",
+]
+
+[[package]]
 name = "hashbrown"
 version = "0.15.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
