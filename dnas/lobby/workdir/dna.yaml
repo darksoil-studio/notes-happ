@@ -3,7 +3,7 @@ name: lobby
 integrity:
   network_seed: null
   properties: null
-  origin_time: 1743078464593730
+  origin_time: 1743078464593739
   zomes:
   - name: group_invites_integrity
     hash: null

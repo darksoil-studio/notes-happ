@@ -95,7 +95,7 @@ export class HolochainApp extends SignalWatcher(LitElement) {
 				>
 					<create-group-profile
 						@group-created=${(e: CustomEvent) =>
-							this.router.goto(`/home/group/${e.detail.networkSeed}`)}
+							this.router.goto(`/home/group/${e.detail.networkSeed}/`)}
 					>
 					</create-group-profile>
 				</overlay-page>`,
