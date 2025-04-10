@@ -25,9 +25,9 @@
     "@shoelace-style/shoelace": "^2.11.0",
     "lit": "^3.0.0",
     "urlpattern-polyfill": "^10.0.0",
-    "@darksoil-studio/friends-zome": "0.400.0-rev.ed383cdab14f66c7d290d1114c7f161835b9ef08",
-    "@darksoil-studio/private-event-sourcing-zome": "0.400.0-rev.2db7d14b007978a6da1fcf153663eeb99bd34a3a",
-    "@darksoil-studio/file-storage-zome": "0.400.0-rev.6c851601e203a8927d896b5026b558f61badfb77"
+    "@darksoil-studio/friends-zome": "file:/home/guillem/projects/darksoil/friends-zome/ui",
+    "@darksoil-studio/private-event-sourcing-zome": "0.400.0-rev.0842c4159c56b54e772494873ac08aa9b08990cf",
+    "@darksoil-studio/file-storage-zome": "0.400.0-rev.4ea07c0418fb016194166866d12f0f580fa2a1a5"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.3",

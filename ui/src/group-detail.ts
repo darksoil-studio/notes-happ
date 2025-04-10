@@ -1,3 +1,4 @@
+import { SearchUsers } from '@darksoil-studio/profiles-provider/dist/elements/search-users';
 import {
 	AppClient,
 	AppInfo,
@@ -10,13 +11,24 @@ import {
 } from '@holochain/client';
 import { consume } from '@lit/context';
 import { localized, msg } from '@lit/localize';
-import { mdiInformationOutline } from '@mdi/js';
-import { Routes, appClientContext, wrapPathInSvg } from '@tnesh-stack/elements';
+import {
+	mdiCog,
+	mdiInformationOutline,
+	mdiPlus,
+	mdiSettingsHelper,
+} from '@mdi/js';
+import {
+	Routes,
+	appClientContext,
+	notifyError,
+	wrapPathInSvg,
+} from '@tnesh-stack/elements';
 import { SignalWatcher } from '@tnesh-stack/signals';
-import { LitElement, html } from 'lit';
+import { LitElement, css, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
 import { appStyles } from './app-styles';
+import './group-members.js';
 import './group/notes/elements/all-notes.js';
 import './group/notes/elements/create-note.js';
 import { NotesContext } from './group/notes/elements/notes-context';
@@ -32,6 +44,9 @@ export class GroupDetail extends SignalWatcher(LitElement) {
 	@consume({ context: appClientContext })
 	appClient!: AppClient;
 
+	@consume({ context: groupInvitesStoreContext })
+	groupInvitesStore!: GroupInvitesStore;
+
 	@state()
 	creatingNote = false;
 
@@ -39,12 +54,12 @@ export class GroupDetail extends SignalWatcher(LitElement) {
 		{
 			path: '',
 			render: () => html`
-				<div class="column" style="flex: 1; gap: 16px">
-					<div class="row">
-						<div style="flex: 1"></div>
-						<sl-button @click=${() => this.routes.goto(`create-note`)}
-							>${msg('Create Note')}</sl-button
-						>
+				<div class="column" style="flex: 1; gap: 16px; position:relative">
+					<div class="row" style="gap: 8px; align-items: center">
+						<span class="title">${this.networkSeed}</span>
+						<sl-button circle @click=${() => this.routes.goto(`settings`)}
+							><sl-icon .src=${wrapPathInSvg(mdiCog)}></sl-icon
+						></sl-button>
 					</div>
 					<all-notes
 						style="flex: 1"
@@ -52,6 +67,15 @@ export class GroupDetail extends SignalWatcher(LitElement) {
 							this.routes.goto(`note/${encodeHashToBase64(e.detail.noteHash)}`)}
 					>
 					</all-notes>
+					<sl-button
+						pill
+						variant="primary"
+						@click=${() => this.routes.goto(`create-note`)}
+						style="position: absolute; right: 0; bottom: 0"
+					>
+						<sl-icon slot="prefix" .src=${wrapPathInSvg(mdiPlus)}> </sl-icon>
+						${msg('Create Note')}</sl-button
+					>
 				</div>
 			`,
 		},
@@ -109,6 +133,111 @@ export class GroupDetail extends SignalWatcher(LitElement) {
 					></edit-note>
 				</overlay-page>`,
 		},
+		{
+			path: 'settings',
+			render: params =>
+				html`<overlay-page
+					.title=${msg('Settings')}
+					icon="back"
+					@close-requested=${() => this.routes.goto(``)}
+				>
+					<div class="column" style="gap:16px">
+						<div class="row" style="gap:16px">
+							<div style="flex: 1"></div>
+							<sl-button
+								@click=${() => this.routes.goto('add-members')}
+								variant="primary"
+								>${msg('Add Members')}
+							</sl-button>
+						</div>
+
+						<sl-card>
+							<div class="column" style="gap:16px; flex: 1">
+								<span class="title">${msg('Members')}</span>
+
+								<group-members .networkSeed=${this.networkSeed}>
+								</group-members>
+							</div>
+						</sl-card>
+						<sl-button
+							variant="danger"
+							@click=${() =>
+								this.shadowRoot!.querySelector('sl-dialog')!.show()}
+							>${msg('Leave Group')}
+						</sl-button>
+						<sl-dialog .label=${msg('Leave Group')}>
+							<span>${msg('Are you sure you want to leave this group?')} </span>
+							<sl-button
+								slot="footer"
+								@click=${() =>
+									this.shadowRoot!.querySelector('sl-dialog')!.hide()}
+								>${msg('Cancel')}</sl-button
+							>
+							<sl-button
+								variant="danger"
+								slot="footer"
+								@click=${async () => {
+									try {
+										await this.groupInvitesStore.client.leaveGroup(
+											this.networkSeed,
+										);
+										this.dispatchEvent(
+											new CustomEvent('leave-group', {
+												bubbles: true,
+												composed: true,
+											}),
+										);
+									} catch (e) {
+										notifyError(msg('Failed to add members.'));
+										console.error(e);
+									}
+								}}
+								>${msg('Leave Group')}</sl-button
+							>
+						</sl-dialog>
+					</div>
+				</overlay-page>`,
+		},
+		{
+			path: 'add-members',
+			render: params =>
+				html`<overlay-page
+					.title=${msg('Add Members')}
+					icon="close"
+					@close-requested=${() => this.routes.goto(`settings`)}
+				>
+					<div class="column" style="gap:16px">
+						<sl-card>
+							<div class="column" style="gap:16px; flex:1">
+								<span class="title">Members</span>
+
+								<search-users style="height: 300px"> </search-users>
+								<sl-button
+									variant="primary"
+									@click=${async () => {
+										try {
+											const members = (
+												this.shadowRoot!.querySelector(
+													'search-users',
+												) as SearchUsers
+											).value;
+											await this.groupInvitesStore.client.inviteAgentsToGroup(
+												this.networkSeed,
+												members.map(m => m[0]),
+											);
+											this.routes.goto('settings');
+										} catch (e) {
+											notifyError(msg('Failed to add members.'));
+											console.error(e);
+										}
+									}}
+									>${msg('Add Members')}
+								</sl-button>
+							</div>
+						</sl-card>
+					</div>
+				</overlay-page>`,
+		},
 	]);
 
 	// renderContent() {
@@ -152,5 +281,12 @@ export class GroupDetail extends SignalWatcher(LitElement) {
 		`;
 	}
 
-	static styles = appStyles;
+	static styles = [
+		css`
+			:host {
+				display: flex;
+			}
+		`,
+		appStyles,
+	];
 }

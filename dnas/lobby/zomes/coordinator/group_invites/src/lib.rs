@@ -5,15 +5,16 @@ use private_event_sourcing::*;
 
 #[private_event]
 pub enum GroupInvitesEvent {
+    CreateGroup {
+        network_seed: String,
+        members: BTreeSet<AgentPubKey>,
+    },
     GroupInvite {
         network_seed: String,
-        agents: BTreeSet<AgentPubKey>,
+        members: BTreeSet<AgentPubKey>,
     },
-    AcceptedGroupInvite {
-        group_invite_hash: EntryHash,
-    },
-    RejectedGroupInvite {
-        group_invite_hash: EntryHash,
+    LeaveGroup {
+        network_seed: String,
     },
 }
 
@@ -34,24 +35,31 @@ impl PrivateEvent for GroupInvitesEvent {
         _timestamp: Timestamp,
     ) -> ExternResult<BTreeSet<AgentPubKey>> {
         match self {
-            GroupInvitesEvent::GroupInvite { agents, .. } => Ok(agents.clone()),
-            Self::AcceptedGroupInvite { group_invite_hash }
-            | Self::RejectedGroupInvite { group_invite_hash } => {
-                let Some(group_invite_event) =
-                    query_private_event::<GroupInvitesEvent>(group_invite_hash.clone())?
-                else {
-                    return Err(wasm_error!("Failed to find group invite."));
-                };
-
-                Ok(vec![group_invite_event.author].into_iter().collect())
-            }
+            GroupInvitesEvent::CreateGroup { members, .. } => Ok(members.clone()),
+            GroupInvitesEvent::GroupInvite { members, .. } => Ok(members.clone()),
+            GroupInvitesEvent::LeaveGroup { .. } => Ok(BTreeSet::new()),
         }
     }
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct CreateGroupInput {
+    members: BTreeSet<AgentPubKey>,
+    network_seed: String,
+}
+
+#[hdk_extern]
+pub fn create_group(input: CreateGroupInput) -> ExternResult<()> {
+    create_private_event(GroupInvitesEvent::CreateGroup {
+        network_seed: input.network_seed,
+        members: input.members,
+    })?;
+    Ok(())
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct InviteAgentsToGroupInput {
-    agents: BTreeSet<AgentPubKey>,
+    members: BTreeSet<AgentPubKey>,
     network_seed: String,
 }
 
@@ -59,14 +67,16 @@ pub struct InviteAgentsToGroupInput {
 pub fn invite_agents_to_group(input: InviteAgentsToGroupInput) -> ExternResult<()> {
     create_private_event(GroupInvitesEvent::GroupInvite {
         network_seed: input.network_seed,
-        agents: input.agents,
+        members: input.members,
     })?;
     Ok(())
 }
 
 #[hdk_extern]
-pub fn accept_group_invite(group_invite_hash: EntryHash) -> ExternResult<()> {
-    create_private_event(GroupInvitesEvent::AcceptedGroupInvite { group_invite_hash })?;
+pub fn leave_group(group_network_seed: String) -> ExternResult<()> {
+    create_private_event(GroupInvitesEvent::LeaveGroup {
+        network_seed: group_network_seed,
+    })?;
     Ok(())
 }
 

@@ -28,14 +28,21 @@ export class GroupInvitesClient extends PrivateEventSourcingClient<GroupInvitesE
 		super(client, roleName, zomeName);
 	}
 
-	async inviteAgentsToGroup(networkSeed: string, agents: AgentPubKey[]) {
-		await this.callZome('invite_agents_to_group', {
+	async createGroup(networkSeed: string, members: AgentPubKey[]) {
+		await this.callZome('create_group', {
 			network_seed: networkSeed,
-			agents,
+			members,
 		});
 	}
 
-	async acceptGroupInvite(groupInviteHash: EntryHash) {
-		await this.callZome('accept_group_invite', groupInviteHash);
+	async inviteAgentsToGroup(networkSeed: string, members: AgentPubKey[]) {
+		await this.callZome('invite_agents_to_group', {
+			network_seed: networkSeed,
+			members,
+		});
+	}
+
+	async leaveGroup(groupNetworkSeed: string) {
+		await this.callZome('leave_group', groupNetworkSeed);
 	}
 }

@@ -7,6 +7,7 @@ import {
 	Router,
 	Routes,
 	appClientContext,
+	sharedStyles,
 	wrapPathInSvg,
 } from '@tnesh-stack/elements';
 import '@tnesh-stack/elements/dist/elements/display-error.js';
@@ -18,6 +19,7 @@ import { customElement, state } from 'lit/decorators.js';
 import { appStyles } from './app-styles.js';
 import './group-detail.js';
 import './group-list.js';
+import './my-contacts.js';
 
 @customElement('home-page')
 export class HomePage extends SignalWatcher(LitElement) {
@@ -43,15 +45,23 @@ export class HomePage extends SignalWatcher(LitElement) {
 		{
 			path: 'group/:networkSeed/*',
 			render: params => html`
-				<group-detail .networkSeed=${params.networkSeed} style="flex: 1">
+				<group-detail
+					.networkSeed=${params.networkSeed}
+					style="flex: 1"
+					@leave-group=${() => this.routes.goto('')}
+				>
 				</group-detail>
 			`,
+		},
+		{
+			path: 'contacts',
+			render: params => html` <my-contacts style="flex: 1"> </my-contacts> `,
 		},
 	]);
 
 	renderContent() {
 		return html`
-			<div class="row" style="flex: 1; margin: 16px">
+			<div class="row" style="flex: 1; margin: 16px; gap: 16px">
 				<div class="column" style="flex-basis: 200px; gap: 16px">
 					<div class="row">
 						<sl-button
@@ -72,6 +82,12 @@ export class HomePage extends SignalWatcher(LitElement) {
 							this.routes.goto(`group/${e.detail.roleName}/`)}
 					>
 					</group-list>
+
+					<sl-button
+						variant="primary"
+						@click=${() => this.routes.goto('contacts')}
+						>${msg('Contacts')}
+					</sl-button>
 				</div>
 
 				${this.routes.outlet()}
@@ -112,5 +128,6 @@ export class HomePage extends SignalWatcher(LitElement) {
 			}
 		`,
 		...appStyles,
+		sharedStyles,
 	];
 }

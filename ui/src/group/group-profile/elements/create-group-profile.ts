@@ -1,4 +1,5 @@
 import '@darksoil-studio/file-storage-zome/dist/elements/upload-files.js';
+import '@darksoil-studio/profiles-provider/dist/elements/search-users.js';
 import {
 	ActionHash,
 	AgentPubKey,
@@ -33,6 +34,8 @@ import { customElement, property, query, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 
 import { appStyles } from '../../../app-styles.js';
+import { groupInvitesStoreContext } from '../../../lobby/group-invites/context.js';
+import { GroupInvitesStore } from '../../../lobby/group-invites/group-invites-store.js';
 import { groupProfileStoreContext } from '../context.js';
 import { GroupProfileClient } from '../group-profile-client.js';
 import { GroupProfileStore } from '../group-profile-store.js';
@@ -51,6 +54,10 @@ export class CreateGroupProfile extends SignalWatcher(LitElement) {
 	@consume({ context: appClientContext, subscribe: true })
 	appClient!: AppClient;
 
+	@consume({ context: groupInvitesStoreContext })
+	@property()
+	groupInvitesStore!: GroupInvitesStore;
+
 	/**
 	 * @internal
 	 */
@@ -63,7 +70,10 @@ export class CreateGroupProfile extends SignalWatcher(LitElement) {
 	@query('#create-form')
 	form!: HTMLFormElement;
 
-	async createGroupProfile(fields: Partial<GroupProfile>) {
+	async createGroupProfile(
+		fields: Partial<GroupProfile>,
+		members: AgentPubKey | Array<AgentPubKey>,
+	) {
 		const groupProfile: GroupProfile = {
 			name: fields.name!,
 			avatar_hash: fields.avatar_hash!,
@@ -77,6 +87,17 @@ export class CreateGroupProfile extends SignalWatcher(LitElement) {
 				},
 				role_name: 'group',
 			});
+
+			const membersArray = Array.isArray(members)
+				? members
+				: members
+					? [members]
+					: [];
+
+			await this.groupInvitesStore.client.createGroup(
+				fields.name!,
+				membersArray,
+			);
 
 			const groupProfileClient = new GroupProfileClient(
 				this.appClient,
@@ -111,7 +132,9 @@ export class CreateGroupProfile extends SignalWatcher(LitElement) {
 				id="create-form"
 				class="column"
 				style="flex: 1; gap: 16px;"
-				${onSubmit(fields => this.createGroupProfile(fields))}
+				${onSubmit(fields =>
+					this.createGroupProfile(fields, fields['members']),
+				)}
 			>
 				<span class="title">${msg('Create Group Profile')}</span>
 				<sl-input name="name" .label=${msg('Name')} required></sl-input>
@@ -121,6 +144,7 @@ export class CreateGroupProfile extends SignalWatcher(LitElement) {
 					accepted-files="image/jpeg,image/png,image/gif"
 					style="display: none"
 				></upload-files>
+				<search-users name="members" style="height: 300px"></search-users>
 
 				<sl-button variant="primary" type="submit" .loading=${this.committing}
 					>${msg('Create Group Profile')}</sl-button

@@ -21,15 +21,16 @@ export type LinkTypes = string;
 
 export type GroupInvitesEvent =
 	| {
+			type: 'CreateGroup';
+			members: AgentPubKey[];
+			network_seed: string;
+	  }
+	| {
 			type: 'GroupInvite';
-			agents: AgentPubKey[];
-			network_seed: String;
+			members: AgentPubKey[];
+			network_seed: string;
 	  }
 	| {
-			type: 'AcceptedGroupInvite';
-			group_invite_hash: EntryHash;
-	  }
-	| {
-			type: 'RejectedGroupInvite';
-			group_invite_hash: EntryHash;
+			type: 'LeaveGroup';
+			network_seed: string;
 	  };

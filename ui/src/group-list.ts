@@ -54,7 +54,7 @@ export class GroupList extends SignalWatcher(LitElement) {
 	}
 
 	render() {
-		const allGroups = this.groupInvitesStore.allGroups.get();
+		const allGroups = this.groupInvitesStore.groupsImPartOf.get();
 		switch (allGroups.status) {
 			case 'pending':
 				return html`<div
@@ -68,7 +68,7 @@ export class GroupList extends SignalWatcher(LitElement) {
 					.error=${allGroups.error}
 				></display-error>`;
 			case 'completed':
-				return this.renderGroups(allGroups.value);
+				return this.renderGroups(Array.from(allGroups.value));
 		}
 	}
 
