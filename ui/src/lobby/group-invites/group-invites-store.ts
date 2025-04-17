@@ -64,8 +64,6 @@ export class GroupInvitesStore extends PrivateEventSourcingStore<GroupInvitesEve
 				}
 			}
 
-			console.log(allGroups.value);
-
 			// for (const group of allGroups.value) {
 			// 	if (!groupsImPartOf.value.has(group.dna_modifiers.network_seed)) {
 			// 		this.client.client.disableCloneCell({

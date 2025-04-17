@@ -31,6 +31,7 @@ import { appStyles } from './app-styles';
 import './group-members.js';
 import './group/notes/elements/all-notes.js';
 import './group/notes/elements/create-note.js';
+import './group/notes/elements/note-detail.js';
 import { NotesContext } from './group/notes/elements/notes-context';
 import { groupInvitesStoreContext } from './lobby/group-invites/context';
 import { GroupInvitesStore } from './lobby/group-invites/group-invites-store';
@@ -70,11 +71,22 @@ export class GroupDetail extends SignalWatcher(LitElement) {
 					<sl-button
 						pill
 						variant="primary"
-						@click=${() => this.routes.goto(`create-note`)}
+						@click=${async () => {
+							const notesContext = this.shadowRoot!.querySelector(
+								'notes-context',
+							)! as NotesContext;
+							const note = await notesContext.store.client.createNote({
+								content:
+									'<div style="flex-direction:column; display:flex;"></div>',
+								title: '',
+								images_hashes: [],
+							});
+							this.routes.goto(`note/${encodeHashToBase64(note.actionHash)}`);
+						}}
 						style="position: absolute; right: 0; bottom: 0"
 					>
 						<sl-icon slot="prefix" .src=${wrapPathInSvg(mdiPlus)}> </sl-icon>
-						${msg('Create Note')}</sl-button
+						${msg('New Note')}</sl-button
 					>
 				</div>
 			`,
@@ -110,6 +122,7 @@ export class GroupDetail extends SignalWatcher(LitElement) {
 					@close-requested=${() => this.routes.goto('')}
 				>
 					<note-detail
+						style="flex: 1"
 						.noteHash=${decodeHashFromBase64(params.noteHash!)}
 						@edit-clicked=${() =>
 							this.routes.goto(`note/${params.noteHash}/edit`)}

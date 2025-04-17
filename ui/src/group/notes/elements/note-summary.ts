@@ -10,6 +10,7 @@ import { SignalWatcher } from '@tnesh-stack/signals';
 import { EntryRecord } from '@tnesh-stack/utils';
 import { LitElement, css, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import { appStyles } from '../../../app-styles.js';
 import { notesStoreContext } from '../context.js';
@@ -37,19 +38,25 @@ export class NoteSummary extends SignalWatcher(LitElement) {
 
 	renderSummary(entryRecord: EntryRecord<Note>) {
 		return html`
-			<div class="row" style="gap: 16px; flex: 1;">
-				<show-image
-					.imageHash=${entryRecord.entry.image_hash}
-					style="width: 150px; height: 150px; margin: -20px"
-				></show-image>
+			<div class="row" style="gap: 16px; flex: 1; height: 200px">
+				<div class="row" style="height: 200px">
+					${entryRecord.entry.images_hashes.map(
+						imageHash => html`
+							<show-image
+								style="max-width: 600px;"
+								.imageHash=${imageHash}
+							></show-image>
+						`,
+					)}
+				</div>
 				<div class="column" style="gap: 16px; flex: 1; margin-left: 20px">
-					<strong style="white-space: pre-line"
-						>${entryRecord.entry.title}</strong
+					<span style="white-space: pre-line; font-size: 24px"
+						>${entryRecord.entry.title}</span
 					>
 
-					<span style="white-space: pre-line"
-						>${entryRecord.entry.content}</span
-					>
+					<div style="overflow: hidden">
+						${unsafeHTML(entryRecord.entry.content)}
+					</div>
 				</div>
 			</div>
 		`;
@@ -98,6 +105,9 @@ export class NoteSummary extends SignalWatcher(LitElement) {
 		css`
 			:host {
 				display: flex;
+			}
+			sl-checkbox {
+				margin-bottom: 8px;
 			}
 		`,
 	];

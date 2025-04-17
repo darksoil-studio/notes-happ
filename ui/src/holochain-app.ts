@@ -33,7 +33,6 @@ import './group/group-profile/elements/group-profile-context.js';
 import './group/group-profile/elements/group-profile-detail.js';
 import './group/notes/elements/create-note.js';
 import './group/notes/elements/edit-note.js';
-import './group/notes/elements/note-detail.js';
 import { NotesContext } from './group/notes/elements/notes-context.js';
 import './group/notes/elements/notes-context.js';
 import './home-page.js';
