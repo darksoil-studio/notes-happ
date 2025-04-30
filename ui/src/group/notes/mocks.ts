@@ -28,7 +28,7 @@ import {
 	fakeUpdateEntry,
 	hash,
 	pickBy,
-} from '@tnesh-stack/utils';
+} from '@darksoil-studio/holochain-utils';
 
 import { NotesClient } from './notes-client.js';
 import { Note } from './types.js';

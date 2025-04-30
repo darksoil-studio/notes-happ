@@ -15,7 +15,7 @@ import {
 	EntryRecord,
 	ZomeClient,
 	isSignalFromCellWithRole,
-} from '@tnesh-stack/utils';
+} from '@darksoil-studio/holochain-utils';
 
 import { GroupInvitesEvent, GroupInvitesSignal } from './types.js';
 

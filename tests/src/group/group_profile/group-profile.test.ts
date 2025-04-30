@@ -3,9 +3,9 @@ import { assert, test } from "vitest";
 import { ActionHash, Delete, Record, SignedActionHashed } from "@holochain/client";
 import { dhtSync, pause, runScenario } from "@holochain/tryorama";
 import { decode } from "@msgpack/msgpack";
-import { toPromise } from "@tnesh-stack/signals";
-import { EntryRecord } from "@tnesh-stack/utils";
-import { cleanNodeDecoding } from "@tnesh-stack/utils/dist/clean-node-decoding.js";
+import { toPromise } from "@darksoil-studio/holochain-signals";
+import { EntryRecord } from "@darksoil-studio/holochain-utils";
+import { cleanNodeDecoding } from "@darksoil-studio/holochain-utils/dist/clean-node-decoding.js";
 
 import { sampleGroupProfile } from "../../../../ui/src/group/group_profile/mocks.js";
 import { GroupProfile } from "../../../../ui/src/group/group_profile/types.js";

@@ -11,8 +11,8 @@ import {
   latestVersionOfEntrySignal,
   liveLinksSignal,
   pipe,
-} from "@tnesh-stack/signals";
-import { EntryRecord, HashType, MemoHoloHashMap, retype, slice } from "@tnesh-stack/utils";
+} from "@darksoil-studio/holochain-signals";
+import { EntryRecord, HashType, MemoHoloHashMap, retype, slice } from "@darksoil-studio/holochain-utils";
 
 import { GroupProfileClient } from "./group-profile-client.js";
 

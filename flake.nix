@@ -2,18 +2,21 @@
   description = "Template for Holochain app development";
 
   inputs = {
-    holonix.url = "github:holochain/holonix/main-0.4";
+    holonix.url = "github:holochain/holonix/main-0.5";
 
     nixpkgs.follows = "holonix/nixpkgs";
     flake-parts.follows = "holonix/flake-parts";
 
-    tnesh-stack.url = "github:darksoil-studio/tnesh-stack/main-0.4";
-    playground.url = "github:darksoil-studio/holochain-playground/main-0.4";
-    p2p-shipyard.url = "github:darksoil-studio/p2p-shipyard/main-0.4";
-    file-storage.url = "github:darksoil-studio/file-storage/main-0.4";
-    friends-zome.url = "github:darksoil-studio/friends-zome/main-0.4";
+    scaffolding.url = "github:darksoil-studio/scaffolding/main-0.5";
+    holochain-nix-builders.url =
+      "github:darksoil-studio/holochain-nix-builders/main-0.5";
+    playground.url = "github:darksoil-studio/holochain-playground/main-0.5";
+    p2p-shipyard.url = "github:darksoil-studio/p2p-shipyard/main-0.5";
+
+    file-storage.url = "github:darksoil-studio/file-storage/main-0.5";
+    friends-zome.url = "github:darksoil-studio/friends-zome/main-0.5";
     private-event-sourcing-zome.url =
-      "github:darksoil-studio/private-event-sourcing-zome/main-0.4";
+      "github:darksoil-studio/private-event-sourcing-zome/main-0.5";
   };
 
   nixConfig = {
@@ -35,12 +38,12 @@
       perSystem = { inputs', config, pkgs, system, ... }: {
         devShells.default = pkgs.mkShell {
           inputsFrom = [
-            inputs'.tnesh-stack.devShells.synchronized-pnpm
+            inputs'.scaffolding.devShells.synchronized-pnpm
             inputs'.holonix.devShells.default
           ];
           packages = [
-            inputs'.tnesh-stack.packages.holochain
-            inputs'.tnesh-stack.packages.hc-scaffold-happ
+            inputs'.holochain-nix-builders.packages.holochain
+            inputs'.scaffolding.packages.hc-scaffold-happ
             inputs'.p2p-shipyard.packages.hc-pilot
             inputs'.playground.packages.hc-playground
           ];

@@ -1,3 +1,10 @@
+import {
+	Routes,
+	appClientContext,
+	notifyError,
+	wrapPathInSvg,
+} from '@darksoil-studio/holochain-elements';
+import { SignalWatcher } from '@darksoil-studio/holochain-signals';
 import { SearchUsers } from '@darksoil-studio/profiles-provider/dist/elements/search-users';
 import {
 	AppClient,
@@ -17,15 +24,9 @@ import {
 	mdiPlus,
 	mdiSettingsHelper,
 } from '@mdi/js';
-import {
-	Routes,
-	appClientContext,
-	notifyError,
-	wrapPathInSvg,
-} from '@tnesh-stack/elements';
-import { SignalWatcher } from '@tnesh-stack/signals';
 import { LitElement, css, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { AsyncComputed } from 'signal-utils/async-computed';
 
 import { appStyles } from './app-styles';
 import './group-members.js';
@@ -268,28 +269,25 @@ export class GroupDetail extends SignalWatcher(LitElement) {
 	// 	`;
 	// }
 
-	roleName() {
-		const appInfo: AppInfo = (this.appClient as AppWebsocket).cachedAppInfo!;
+	roleName = new AsyncComputed(async () => {
+		const appInfo: AppInfo = (await this.appClient.appInfo())!;
 
 		const groupCell = appInfo.cell_info['group']
-			.filter(cellInfo => cellInfo as { [CellType.Cloned]: ClonedCell })
-			.map(
-				cellInfo =>
-					(cellInfo as { [CellType.Cloned]: ClonedCell })[CellType.Cloned],
-			)
+			.filter(cellInfo => cellInfo.type === CellType.Cloned)
+			.map(cellInfo => cellInfo.value)
 			.find(
 				clonedCell =>
 					clonedCell?.dna_modifiers.network_seed === this.networkSeed,
 			);
 		return groupCell!.clone_id;
-	}
+	});
 
 	render() {
+		const value = this.roleName.value;
+		if (!value) return html``;
 		return html`
-			<file-storage-context .role=${this.roleName()}>
-				<notes-context .role=${this.roleName()}>
-					${this.routes.outlet()}</notes-context
-				>
+			<file-storage-context .role=${value}>
+				<notes-context .role=${value}> ${this.routes.outlet()}</notes-context>
 			</file-storage-context>
 		`;
 	}

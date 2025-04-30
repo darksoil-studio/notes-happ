@@ -11,4 +11,4 @@ name = "group_invites_integrity"
 hdi = { workspace = true }
 serde = { workspace = true }
 
-private_event_sourcing_integrity = { git = "https://github.com/darksoil-studio/private-event-sourcing-zome", branch = "main-0.4"}
+private_event_sourcing_integrity = { git = "https://github.com/darksoil-studio/private-event-sourcing-zome", branch = "main-0.5"}

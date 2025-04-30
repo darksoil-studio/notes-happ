@@ -15,7 +15,7 @@ import {
 } from "@holochain/client";
 import { dhtSync, pause, Player, Scenario } from "@holochain/tryorama";
 import { encode } from "@msgpack/msgpack";
-import { EntryRecord } from "@tnesh-stack/utils";
+import { EntryRecord } from "@darksoil-studio/holochain-utils";
 import { NotesClient } from "../../../../ui/src/group/notes/notes-client.js";
 import { NotesStore } from "../../../../ui/src/group/notes/notes-store.js";
 import { appPath } from "../../app-path.js";

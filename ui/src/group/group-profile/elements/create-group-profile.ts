@@ -1,9 +1,21 @@
 import '@darksoil-studio/file-storage-zome/dist/elements/upload-files.js';
+import {
+	appClientContext,
+	hashProperty,
+	hashState,
+	notifyError,
+	onSubmit,
+	wrapPathInSvg,
+} from '@darksoil-studio/holochain-elements';
+import '@darksoil-studio/holochain-elements/dist/elements/display-error.js';
+import { SignalWatcher } from '@darksoil-studio/holochain-signals';
+import { EntryRecord } from '@darksoil-studio/holochain-utils';
 import '@darksoil-studio/profiles-provider/dist/elements/search-users.js';
 import {
 	ActionHash,
 	AgentPubKey,
 	AppClient,
+	AppWebsocket,
 	DnaHash,
 	EntryHash,
 	Record,
@@ -18,17 +30,6 @@ import '@shoelace-style/shoelace/dist/components/card/card.js';
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js';
 import '@shoelace-style/shoelace/dist/components/icon/icon.js';
 import '@shoelace-style/shoelace/dist/components/input/input.js';
-import {
-	appClientContext,
-	hashProperty,
-	hashState,
-	notifyError,
-	onSubmit,
-	wrapPathInSvg,
-} from '@tnesh-stack/elements';
-import '@tnesh-stack/elements/dist/elements/display-error.js';
-import { SignalWatcher } from '@tnesh-stack/signals';
-import { EntryRecord } from '@tnesh-stack/utils';
 import { LitElement, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';

@@ -3,8 +3,8 @@ import { assert, test } from "vitest";
 import { ActionHash, EntryHash, Record } from "@holochain/client";
 import { dhtSync, runScenario } from "@holochain/tryorama";
 import { decode } from "@msgpack/msgpack";
-import { toPromise } from "@tnesh-stack/signals";
-import { EntryRecord } from "@tnesh-stack/utils";
+import { toPromise } from "@darksoil-studio/holochain-signals";
+import { EntryRecord } from "@darksoil-studio/holochain-utils";
 
 import { sampleNote } from "../../../../ui/src/group/notes/mocks.js";
 import { Note } from "../../../../ui/src/group/notes/types.js";

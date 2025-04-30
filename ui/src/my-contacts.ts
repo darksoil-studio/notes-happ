@@ -10,7 +10,7 @@ import '@darksoil-studio/friends-zome/dist/elements/my-friends.js';
 import { consume } from '@lit/context';
 import { localized, msg } from '@lit/localize';
 import '@shoelace-style/shoelace/dist/components/dialog/dialog.js';
-import { SignalWatcher } from '@tnesh-stack/signals';
+import { SignalWatcher } from '@darksoil-studio/holochain-signals';
 import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 

@@ -3,7 +3,6 @@ name: group
 integrity:
   network_seed: null
   properties: null
-  origin_time: 1743078472950982
   zomes:
   - name: file_storage_integrity
     hash: null
@@ -40,4 +39,3 @@ coordinator:
     dependencies:
     - name: notes_integrity
     dylib: null
-lineage: []

@@ -30,7 +30,7 @@ import {
   HoloHashMap,
   pickBy,
   ZomeMock,
-} from "@tnesh-stack/utils";
+} from "@darksoil-studio/holochain-utils";
 import { GroupProfileClient } from "./group-profile-client.js";
 
 export class GroupProfileZomeMock extends ZomeMock implements AppClient {

@@ -12,7 +12,7 @@ import {
   Record,
   SignedActionHashed,
 } from "@holochain/client";
-import { EntryRecord, isSignalFromCellWithRole, ZomeClient } from "@tnesh-stack/utils";
+import { EntryRecord, isSignalFromCellWithRole, ZomeClient } from "@darksoil-studio/holochain-utils";
 
 import { GroupProfileSignal } from "./types.js";
 

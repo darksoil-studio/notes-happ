@@ -15,7 +15,7 @@ import {
 } from "@holochain/client";
 import { dhtSync, pause, Player, Scenario } from "@holochain/tryorama";
 import { encode } from "@msgpack/msgpack";
-import { EntryRecord } from "@tnesh-stack/utils";
+import { EntryRecord } from "@darksoil-studio/holochain-utils";
 import { GroupInvitesClient } from "../../../../ui/src/lobby/group_invites/group-invites-client.js";
 import { GroupInvitesStore } from "../../../../ui/src/lobby/group_invites/group-invites-store.js";
 import { appPath } from "../../app-path.js";

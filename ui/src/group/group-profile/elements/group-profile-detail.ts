@@ -2,9 +2,9 @@ import { ActionHash, EntryHash, Record } from "@holochain/client";
 import { consume } from "@lit/context";
 import { localized, msg } from "@lit/localize";
 import { mdiAlertCircleOutline, mdiDelete, mdiPencil } from "@mdi/js";
-import { hashProperty, notifyError, wrapPathInSvg } from "@tnesh-stack/elements";
-import { SignalWatcher } from "@tnesh-stack/signals";
-import { EntryRecord } from "@tnesh-stack/utils";
+import { hashProperty, notifyError, wrapPathInSvg } from "@darksoil-studio/holochain-elements";
+import { SignalWatcher } from "@darksoil-studio/holochain-signals";
+import { EntryRecord } from "@darksoil-studio/holochain-utils";
 import { css, html, LitElement } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 
@@ -15,7 +15,7 @@ import "@darksoil-studio/file-storage-zome/dist/elements/show-image.js";
 import "@shoelace-style/shoelace/dist/components/card/card.js";
 import "@shoelace-style/shoelace/dist/components/spinner/spinner.js";
 import "@shoelace-style/shoelace/dist/components/icon-button/icon-button.js";
-import "@tnesh-stack/elements/dist/elements/display-error.js";
+import "@darksoil-studio/holochain-elements/dist/elements/display-error.js";
 
 import { appStyles } from "../../../app-styles.js";
 

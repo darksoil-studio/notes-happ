@@ -1,20 +1,4 @@
 import {
-	PrivateEventSourcingStore,
-	SignedEvent,
-} from '@darksoil-studio/private-event-sourcing-zome';
-import {
-	ActionHash,
-	AgentPubKey,
-	AgentPubKeyB64,
-	CellInfo,
-	ClonedCell,
-	EntryHash,
-	EntryHashB64,
-	NewEntryAction,
-	decodeHashFromBase64,
-	encodeHashToBase64,
-} from '@holochain/client';
-import {
 	AsyncComputed,
 	allRevisionsOfEntrySignal,
 	collectionSignal,
@@ -25,7 +9,7 @@ import {
 	liveLinksSignal,
 	mapCompleted,
 	pipe,
-} from '@tnesh-stack/signals';
+} from '@darksoil-studio/holochain-signals';
 import {
 	EntryRecord,
 	HashType,
@@ -33,7 +17,24 @@ import {
 	MemoMap,
 	retype,
 	slice,
-} from '@tnesh-stack/utils';
+} from '@darksoil-studio/holochain-utils';
+import {
+	PrivateEventSourcingStore,
+	SignedEvent,
+} from '@darksoil-studio/private-event-sourcing-zome';
+import {
+	ActionHash,
+	AgentPubKey,
+	AgentPubKeyB64,
+	CellInfo,
+	CellType,
+	ClonedCell,
+	EntryHash,
+	EntryHashB64,
+	NewEntryAction,
+	decodeHashFromBase64,
+	encodeHashToBase64,
+} from '@holochain/client';
 
 import { effect, lazyLoadAndPoll } from '../../utils.js';
 import { GroupInvitesClient } from './group-invites-client.js';
@@ -225,9 +226,9 @@ export class GroupInvitesStore extends PrivateEventSourcingStore<GroupInvitesEve
 			if (!cellInfo) return [];
 
 			return Object.values(cellInfo)
-				.filter(cellInfo => !('provisioned' in cellInfo))
+				.filter(cellInfo => cellInfo.type === CellType.Cloned)
 				.map(cellInfo => {
-					const cloned: ClonedCell = (cellInfo as any).cloned;
+					const cloned: ClonedCell = cellInfo.value;
 					return cloned;
 				})
 				.sort();

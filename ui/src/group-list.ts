@@ -1,8 +1,8 @@
 import { consume } from '@lit/context';
 import { localized, msg } from '@lit/localize';
 import { mdiInformationOutline } from '@mdi/js';
-import { wrapPathInSvg } from '@tnesh-stack/elements';
-import { SignalWatcher } from '@tnesh-stack/signals';
+import { wrapPathInSvg } from '@darksoil-studio/holochain-elements';
+import { SignalWatcher } from '@darksoil-studio/holochain-signals';
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 

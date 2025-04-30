@@ -15,7 +15,7 @@ import {
 } from "@holochain/client";
 import { dhtSync, pause, Player, Scenario } from "@holochain/tryorama";
 import { encode } from "@msgpack/msgpack";
-import { EntryRecord } from "@tnesh-stack/utils";
+import { EntryRecord } from "@darksoil-studio/holochain-utils";
 import { GroupProfileClient } from "../../../../ui/src/group/group_profile/group-profile-client.js";
 import { GroupProfileStore } from "../../../../ui/src/group/group_profile/group-profile-store.js";
 import { appPath } from "../../app-path.js";

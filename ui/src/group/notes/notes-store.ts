@@ -1,11 +1,4 @@
 import {
-	ActionHash,
-	AgentPubKey,
-	EntryHash,
-	NewEntryAction,
-	Record,
-} from '@holochain/client';
-import {
 	AsyncComputed,
 	allRevisionsOfEntrySignal,
 	collectionSignal,
@@ -15,14 +8,21 @@ import {
 	latestVersionOfEntrySignal,
 	liveLinksSignal,
 	pipe,
-} from '@tnesh-stack/signals';
+} from '@darksoil-studio/holochain-signals';
 import {
 	EntryRecord,
 	HashType,
 	MemoHoloHashMap,
 	retype,
 	slice,
-} from '@tnesh-stack/utils';
+} from '@darksoil-studio/holochain-utils';
+import {
+	ActionHash,
+	AgentPubKey,
+	EntryHash,
+	NewEntryAction,
+	Record,
+} from '@holochain/client';
 
 import { NotesClient } from './notes-client.js';
 import { Note } from './types.js';
@@ -49,7 +49,12 @@ export class NotesStore {
 	/** All Notes */
 
 	allNotes = pipe(
-		collectionSignal(this.client, () => this.client.getAllNotes(), 'AllNotes'),
+		collectionSignal(
+			this.client,
+			() => this.client.getAllNotes(),
+			'AllNotes',
+			2000,
+		),
 		allNotes =>
 			slice(
 				this.notes,

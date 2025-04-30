@@ -28,7 +28,7 @@ import {
   HoloHashMap,
   pickBy,
   ZomeMock,
-} from "@tnesh-stack/utils";
+} from "@darksoil-studio/holochain-utils";
 import { GroupInvitesClient } from "./group-invites-client.js";
 
 export class GroupInvitesZomeMock extends ZomeMock implements AppClient {

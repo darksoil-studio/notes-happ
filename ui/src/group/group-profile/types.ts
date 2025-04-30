@@ -11,7 +11,7 @@ import {
   SignedActionHashed,
   Update,
 } from "@holochain/client";
-import { ActionCommittedSignal } from "@tnesh-stack/utils";
+import { ActionCommittedSignal } from "@darksoil-studio/holochain-utils";
 
 export type GroupProfileSignal = ActionCommittedSignal<EntryTypes, LinkTypes>;
 
