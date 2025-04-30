@@ -1,25 +1,22 @@
 import '@darksoil-studio/file-storage-zome/dist/elements/file-storage-context.js';
 import '@darksoil-studio/friends-zome/dist/elements/friends-context.js';
 import '@darksoil-studio/friends-zome/dist/elements/profile-prompt.js';
+import { Router } from '@darksoil-studio/holochain-elements';
+import '@darksoil-studio/holochain-elements/dist/elements/app-client-context.js';
+import '@darksoil-studio/holochain-elements/dist/elements/display-error.js';
+import { SignalWatcher } from '@darksoil-studio/holochain-signals';
+import '@darksoil-studio/linked-devices-zome/dist/elements/linked-devices-context.js';
 import '@darksoil-studio/profiles-provider/dist/elements/my-profile.js';
 import {
-	ActionHash,
 	AppClient,
 	AppWebsocket,
 	decodeHashFromBase64,
-	encodeHashToBase64,
 } from '@holochain/client';
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { provide } from '@lit/context';
 import { localized, msg } from '@lit/localize';
-import { mdiArrowLeft } from '@mdi/js';
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js';
 import '@shoelace-style/shoelace/dist/components/spinner/spinner.js';
-import { Router, hashState, wrapPathInSvg } from '@darksoil-studio/holochain-elements';
-import '@darksoil-studio/holochain-elements/dist/elements/app-client-context.js';
-import '@darksoil-studio/holochain-elements/dist/elements/display-error.js';
-import { SignalWatcher } from '@darksoil-studio/holochain-signals';
-import { EntryRecord } from '@darksoil-studio/holochain-utils';
 import { LitElement, css, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
@@ -28,15 +25,12 @@ import { isMobileContext } from './context.js';
 import './group-list.js';
 import './group/group-profile/elements/create-group-profile.js';
 import './group/group-profile/elements/edit-group-profile.js';
-import { GroupProfileContext } from './group/group-profile/elements/group-profile-context.js';
 import './group/group-profile/elements/group-profile-context.js';
 import './group/group-profile/elements/group-profile-detail.js';
 import './group/notes/elements/create-note.js';
 import './group/notes/elements/edit-note.js';
-import { NotesContext } from './group/notes/elements/notes-context.js';
 import './group/notes/elements/notes-context.js';
 import './home-page.js';
-import { GroupInvitesContext } from './lobby/group-invites/elements/group-invites-context.js';
 import './lobby/group-invites/elements/group-invites-context.js';
 import './overlay-page.js';
 
@@ -190,13 +184,15 @@ export class HolochainApp extends SignalWatcher(LitElement) {
 
 		return html`
 			<app-client-context .client=${this._client}>
-				<friends-context role="lobby">
-					<group-invites-context role="lobby">
-						<profile-prompt style="flex: 1;">
-							${this.router.outlet()}
-						</profile-prompt>
-					</group-invites-context>
-				</friends-context>
+				<linked-devices-context role="lobby">
+					<friends-context role="lobby">
+						<group-invites-context role="lobby">
+							<profile-prompt style="flex: 1;">
+								${this.router.outlet()}
+							</profile-prompt>
+						</group-invites-context>
+					</friends-context>
+				</linked-devices-context>
 			</app-client-context>
 		`;
 	}

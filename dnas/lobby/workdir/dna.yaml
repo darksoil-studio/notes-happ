@@ -14,6 +14,11 @@ integrity:
     bundled: <NIX_PACKAGE>
     dependencies: null
     dylib: null
+  - name: linked_devices_integrity
+    hash: null
+    bundled: <NIX_PACKAGE>
+    dependencies: null
+    dylib: null
 coordinator:
   zomes:
   - name: group_invites
@@ -27,4 +32,10 @@ coordinator:
     bundled: <NIX_PACKAGE>
     dependencies:
     - name: friends_integrity
+    dylib: null
+  - name: linked_devices
+    hash: null
+    bundled: <NIX_PACKAGE>
+    dependencies:
+    - name: linked_devices_integrity
     dylib: null

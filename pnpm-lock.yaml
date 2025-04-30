@@ -69,8 +69,8 @@ importers:
         specifier: 0.500.0-rev.b02d49d077bf9e4bb1caa967345ccea9ca540a65
         version: 0.500.0-rev.b02d49d077bf9e4bb1caa967345ccea9ca540a65(@floating-ui/utils@0.2.9)(@types/react@19.0.12)
       '@darksoil-studio/friends-zome':
-        specifier: file:/home/guillem/projects/darksoil/friends-zome/ui
-        version: file:../darksoil/friends-zome/ui(@floating-ui/utils@0.2.9)(@types/react@19.0.12)
+        specifier: 0.500.0-rev.e63c9f3c89e0f96b732e50e1ebbf3001e31bd7e9
+        version: 0.500.0-rev.e63c9f3c89e0f96b732e50e1ebbf3001e31bd7e9(@floating-ui/utils@0.2.9)(@types/react@19.0.12)
       '@darksoil-studio/holochain-elements':
         specifier: ^0.500.0
         version: 0.500.0(@floating-ui/utils@0.2.9)(@types/react@19.0.12)
@@ -80,6 +80,9 @@ importers:
       '@darksoil-studio/holochain-utils':
         specifier: ^0.500.0
         version: 0.500.0
+      '@darksoil-studio/linked-devices-zome':
+        specifier: 0.500.0-rev.5a9b78aed28fcc3a2cfcb62441440301ab9b80fb
+        version: 0.500.0-rev.5a9b78aed28fcc3a2cfcb62441440301ab9b80fb(@floating-ui/utils@0.2.9)(@types/react@19.0.12)
       '@darksoil-studio/private-event-sourcing-zome':
         specifier: 0.500.0-rev.b4aae52d1b584fd6a50704663b3486552a3e98a7
         version: 0.500.0-rev.b4aae52d1b584fd6a50704663b3486552a3e98a7(@floating-ui/utils@0.2.9)(@types/react@19.0.12)
@@ -226,8 +229,8 @@ packages:
   '@darksoil-studio/file-storage-zome@0.500.0-rev.b02d49d077bf9e4bb1caa967345ccea9ca540a65':
     resolution: {integrity: sha512-QceALJ+xRMXkIEe/OEp4YSp1wGpE2jy1784l3ZmmKdOVOr1KFqMqcubRcDaVWdrGqa5uHVOXC+U7Tn2Qwykz5Q==}
 
-  '@darksoil-studio/friends-zome@file:../darksoil/friends-zome/ui':
-    resolution: {directory: ../darksoil/friends-zome/ui, type: directory}
+  '@darksoil-studio/friends-zome@0.500.0-rev.e63c9f3c89e0f96b732e50e1ebbf3001e31bd7e9':
+    resolution: {integrity: sha512-pCX+6dJCKmyv+YS/aUpSbLRExqw3yKYh11yasaP7UQLTBdx+mxzkzlUUrrt2FSP/OlFdrpSvAHACM0nKB8T1lw==}
 
   '@darksoil-studio/holochain-elements@0.500.0':
     resolution: {integrity: sha512-ByatMh1LW6je5Ne27UP8JvnZBjzBm0RJuXjqi7Jvm0CoGLbYXIqtTso0A6n7sPeIM+Qu/IHx1uRFfDj4MoYWIA==}
@@ -2278,7 +2281,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@darksoil-studio/friends-zome@file:../darksoil/friends-zome/ui(@floating-ui/utils@0.2.9)(@types/react@19.0.12)':
+  '@darksoil-studio/friends-zome@0.500.0-rev.e63c9f3c89e0f96b732e50e1ebbf3001e31bd7e9(@floating-ui/utils@0.2.9)(@types/react@19.0.12)':
     dependencies:
       '@darksoil-studio/holochain-elements': 0.500.0(@floating-ui/utils@0.2.9)(@types/react@19.0.12)
       '@darksoil-studio/holochain-signals': 0.500.0

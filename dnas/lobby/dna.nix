@@ -11,6 +11,8 @@
       inputs.holochain-nix-builders.outputs.builders.${system}.dna {
         dnaManifest = ./workdir/dna.yaml;
         zomes = {
+          linked_devices_integrity = inputs'.linked-devices-zome.packages.linked_devices_integrity;
+          linked_devices = inputs'.linked-devices-zome.packages.linked_devices;
           friends_integrity = inputs'.friends-zome.packages.friends_integrity;
           friends = inputs'.friends-zome.packages.friends;
           # Include here the zome packages for this DNA, e.g.:

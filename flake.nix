@@ -17,6 +17,8 @@
     friends-zome.url = "github:darksoil-studio/friends-zome/main-0.5";
     private-event-sourcing-zome.url =
       "github:darksoil-studio/private-event-sourcing-zome/main-0.5";
+    linked-devices-zome.url =
+      "github:darksoil-studio/linked-devices-zome/main-0.5";
   };
 
   nixConfig = {
