@@ -9,24 +9,18 @@ members = ["dnas/*/zomes/coordinator/*", "dnas/*/zomes/integrity/*"]
 resolver = "2"
 
 [workspace.dependencies]
-hdi = "0.6"
-hdk = "0.5"
+hdi = "=0.6.1"
+hdk = "=0.5.1"
 serde = "1.0"
 
 [workspace.dependencies.group_invites]
-path = "dnas/lobby/zomes/coordinator/group_invites"
+path = "dnas/main/zomes/coordinator/group_invites"
 
 [workspace.dependencies.group_invites_integrity]
-path = "dnas/lobby/zomes/integrity/group_invites"
-
-[workspace.dependencies.group_profile]
-path = "dnas/group/zomes/coordinator/group_profile"
-
-[workspace.dependencies.group_profile_integrity]
-path = "dnas/group/zomes/integrity/group_profile"
+path = "dnas/main/zomes/integrity/group_invites"
 
 [workspace.dependencies.notes]
-path = "dnas/group/zomes/coordinator/notes"
+path = "dnas/main/zomes/coordinator/notes"
 
 [workspace.dependencies.notes_integrity]
-path = "dnas/group/zomes/integrity/notes"
+path = "dnas/main/zomes/integrity/notes"

@@ -335,42 +335,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "group_invites"
-version = "0.0.1"
-dependencies = [
- "group_invites_integrity",
- "hdk",
- "private_event_sourcing",
- "serde",
-]
-
-[[package]]
-name = "group_invites_integrity"
-version = "0.0.1"
-dependencies = [
- "hdi",
- "private_event_sourcing_integrity",
- "serde",
-]
-
-[[package]]
-name = "group_profile"
-version = "0.0.1"
-dependencies = [
- "group_profile_integrity",
- "hdk",
- "serde",
-]
-
-[[package]]
-name = "group_profile_integrity"
-version = "0.0.1"
-dependencies = [
- "hdi",
- "serde",
-]
-
-[[package]]
 name = "hashbrown"
 version = "0.15.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -681,6 +645,7 @@ version = "0.0.1"
 dependencies = [
  "hdk",
  "notes_integrity",
+ "private_event_sourcing",
  "serde",
 ]
 
@@ -689,6 +654,7 @@ name = "notes_integrity"
 version = "0.0.1"
 dependencies = [
  "hdi",
+ "private_event_sourcing_integrity",
  "serde",
 ]
 

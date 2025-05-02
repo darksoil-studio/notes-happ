@@ -2,12 +2,12 @@ manifest_version: '1'
 name: notes
 description: null
 roles:
-- name: lobby
+- name: main
   provisioning:
     strategy: create
     deferred: false
   dna:
-    bundled: ../dnas/lobby/workdir/lobby.dna
+    bundled: ../dnas/main/workdir/main.dna
     modifiers:
       network_seed: null
       properties: null
@@ -15,17 +15,4 @@ roles:
       quantum_time: null
     installed_hash: null
     clone_limit: 0
-- name: group
-  provisioning:
-    strategy: create
-    deferred: false
-  dna:
-    bundled: ../dnas/group/workdir/group.dna
-    modifiers:
-      network_seed: null
-      properties: null
-      origin_time: null
-      quantum_time: null
-    installed_hash: null
-    clone_limit: 10000
 allow_deferred_memproofs: false

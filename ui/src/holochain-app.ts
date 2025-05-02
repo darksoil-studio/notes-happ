@@ -22,16 +22,8 @@ import { customElement, property, state } from 'lit/decorators.js';
 
 import { appStyles } from './app-styles.js';
 import { isMobileContext } from './context.js';
-import './group-list.js';
-import './group/group-profile/elements/create-group-profile.js';
-import './group/group-profile/elements/edit-group-profile.js';
-import './group/group-profile/elements/group-profile-context.js';
-import './group/group-profile/elements/group-profile-detail.js';
-import './group/notes/elements/create-note.js';
-import './group/notes/elements/edit-note.js';
-import './group/notes/elements/notes-context.js';
 import './home-page.js';
-import './lobby/group-invites/elements/group-invites-context.js';
+import './main/notes/elements/notes-context.js';
 import './overlay-page.js';
 
 export const MOBILE_WIDTH_PX = 600;
@@ -61,7 +53,6 @@ export class HolochainApp extends SignalWatcher(LitElement) {
 			path: '/home/*',
 			render: () =>
 				html`<home-page
-					@create-group-clicked=${() => this.router.goto('/create-group')}
 					@profile-clicked=${() => this.router.goto('/my-profile')}
 				></home-page>`,
 		},
@@ -76,64 +67,6 @@ export class HolochainApp extends SignalWatcher(LitElement) {
 					<sl-card>
 						<my-profile style="flex: 1"></my-profile>
 					</sl-card>
-				</overlay-page>`,
-		},
-		{
-			path: '/create-group',
-			render: () =>
-				html`<overlay-page
-					.title=${msg('Create Group')}
-					icon="close"
-					@close-requested=${() => this.router.goto('/home/')}
-				>
-					<create-group-profile
-						@group-created=${(e: CustomEvent) =>
-							this.router.goto(`/home/group/${e.detail.networkSeed}/`)}
-					>
-					</create-group-profile>
-				</overlay-page>`,
-		},
-		// {
-		// 	path: '/home/group/:groupRoleName',
-		// 	render: params => {
-		// 		const store = this.shadowRoot?.querySelector<GroupProfileContext>(
-		// 			'group-profile-context',
-		// 		)?.store;
-		// 		const groupProfile = store?.groupProfiles
-		// 			.get(decodeHashFromBase64(params.groupProfileHash!))
-		// 			.latestVersion.get();
-		// 		const title = msg('Group Profile');
-
-		// 		return html`<overlay-page
-		// 			.title=${title}
-		// 			icon="back"
-		// 			@close-requested=${() => this.router.goto('/home/')}
-		// 		>
-		// 			<group-profile-detail
-		// 				.groupProfileHash=${decodeHashFromBase64(params.groupProfileHash!)}
-		// 				@edit-clicked=${() =>
-		// 					this.router.goto(
-		// 						`/group-profile/${params.groupProfileHash}/edit`,
-		// 					)}
-		// 			>
-		// 			</group-profile-detail>
-		// 		</overlay-page>`;
-		// 	},
-		// },
-		{
-			path: '/group-profile/:groupProfileHash/edit',
-			render: params =>
-				html`<overlay-page
-					.title=${msg('Edit Group Profile')}
-					icon="close"
-					@close-requested=${() =>
-						this.router.goto(`/group-profile/${params.groupProfileHash!}`)}
-				>
-					<edit-group-profile
-						.groupProfileHash=${decodeHashFromBase64(params.groupProfileHash!)}
-						@group-profile-updated=${() =>
-							this.router.goto(`/group-profile/${params.groupProfileHash!}`)}
-					></edit-group-profile>
 				</overlay-page>`,
 		},
 	]);
@@ -184,15 +117,15 @@ export class HolochainApp extends SignalWatcher(LitElement) {
 
 		return html`
 			<app-client-context .client=${this._client}>
-				<linked-devices-context role="lobby">
-					<friends-context role="lobby">
-						<group-invites-context role="lobby">
+				<notes-context role="main">
+					<linked-devices-context role="main">
+						<friends-context role="main">
 							<profile-prompt style="flex: 1;">
 								${this.router.outlet()}
 							</profile-prompt>
-						</group-invites-context>
-					</friends-context>
-				</linked-devices-context>
+						</friends-context>
+					</linked-devices-context>
+				</notes-context>
 			</app-client-context>
 		`;
 	}
