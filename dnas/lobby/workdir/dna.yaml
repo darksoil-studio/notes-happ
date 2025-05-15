@@ -1,5 +1,5 @@
 manifest_version: '1'
-name: main
+name: lobby
 integrity:
   network_seed: null
   properties: null
@@ -10,11 +10,6 @@ integrity:
     dependencies: null
     dylib: null
   - name: linked_devices_integrity
-    hash: null
-    bundled: <NIX_PACKAGE>
-    dependencies: null
-    dylib: null
-  - name: notes_integrity
     hash: null
     bundled: <NIX_PACKAGE>
     dependencies: null
@@ -32,15 +27,4 @@ coordinator:
     bundled: <NIX_PACKAGE>
     dependencies:
     - name: linked_devices_integrity
-    dylib: null
-  - name: collaborative_sessions
-    hash: null
-    bundled: <NIX_PACKAGE>
-    dependencies: null
-    dylib: null
-  - name: notes
-    hash: null
-    bundled: <NIX_PACKAGE>
-    dependencies:
-    - name: notes_integrity
     dylib: null

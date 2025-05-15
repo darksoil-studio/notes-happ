@@ -1,3 +1,6 @@
+import wasmUrl from '@automerge/automerge/automerge.wasm?url';
+// Note the `/slim` suffixes
+import { next as Automerge } from '@automerge/automerge/slim';
 import '@darksoil-studio/collaborative-sessions-zome/dist/elements/collaborative-sessions-context.js';
 import '@darksoil-studio/file-storage-zome/dist/elements/file-storage-context.js';
 import '@darksoil-studio/friends-zome/dist/elements/friends-context.js';
@@ -28,6 +31,8 @@ import { isMobileContext } from './context.js';
 import './home-page.js';
 import './overlay-page.js';
 
+await Automerge.initializeWasm(wasmUrl);
+
 export const MOBILE_WIDTH_PX = 600;
 
 @localized()
@@ -35,8 +40,6 @@ export const MOBILE_WIDTH_PX = 600;
 export class HolochainApp extends SignalWatcher(LitElement) {
 	@state()
 	_loading = true;
-	@state()
-	_view = { view: 'main' };
 	@state()
 	_error: unknown | undefined;
 
@@ -86,28 +89,6 @@ export class HolochainApp extends SignalWatcher(LitElement) {
 
 		try {
 			this._client = await AppWebsocket.connect();
-			// for (let i = 0; i < 10; i++) {
-			// 	this._client.createCloneCell({
-			// 		modifiers: {
-			// 			network_seed: `${Math.random()}`,
-			// 		},
-			// 		role_name: 'main',
-			// 	});
-			// }
-			const appInfo = await this._client.appInfo();
-
-			for (const cells of appInfo!.cell_info['main']) {
-				if (cells.type === CellType.Cloned && cells.value.enabled) {
-					this._client.disableCloneCell({
-						clone_cell_id: {
-							type: 'dna_hash',
-							value: cells.value.cell_id[0],
-						},
-					});
-				}
-			}
-
-			console.log(await this._client.appInfo());
 		} catch (e: unknown) {
 			this._error = e;
 		} finally {
@@ -141,17 +122,13 @@ export class HolochainApp extends SignalWatcher(LitElement) {
 
 		return html`
 			<app-client-context .client=${this._client}>
-				<notes-context role="main">
-					<collaborative-sessions-context role="main">
-						<linked-devices-context role="main">
-							<friends-context role="main">
-								<profile-prompt style="flex: 1;">
-									${this.router.outlet()}
-								</profile-prompt>
-							</friends-context>
-						</linked-devices-context>
-					</collaborative-sessions-context>
-				</notes-context>
+				<linked-devices-context role="lobby">
+					<friends-context role="lobby">
+						<profile-prompt style="flex: 1;">
+							${this.router.outlet()}
+						</profile-prompt>
+					</friends-context>
+				</linked-devices-context>
 			</app-client-context>
 		`;
 	}

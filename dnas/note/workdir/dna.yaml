@@ -1,0 +1,24 @@
+manifest_version: '1'
+name: note
+integrity:
+  network_seed: null
+  properties: null
+  zomes: 
+  - name: notes_integrity
+    hash: null
+    bundled: <NIX_PACKAGE>
+    dependencies: null
+    dylib: null
+coordinator:
+  zomes: 
+  - name: collaborative_sessions
+    hash: null
+    bundled: <NIX_PACKAGE>
+    dependencies: null
+    dylib: null
+  - name: notes
+    hash: null
+    bundled: <NIX_PACKAGE>
+    dependencies:
+    - name: notes_integrity
+    dylib: null

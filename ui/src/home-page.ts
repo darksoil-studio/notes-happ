@@ -9,6 +9,8 @@ import {
 import '@darksoil-studio/holochain-elements/dist/elements/display-error.js';
 import { AsyncResult, SignalWatcher } from '@darksoil-studio/holochain-signals';
 import { EntryRecord } from '@darksoil-studio/holochain-utils';
+import { NotesClient } from '@darksoil-studio/notes-zome';
+import '@darksoil-studio/notes-zome/dist/elements/notes-context.js';
 import '@darksoil-studio/profiles-provider/dist/elements/agent-avatar.js';
 import {
 	AppClient,
@@ -23,10 +25,8 @@ import { LitElement, css, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
 import { appStyles } from './app-styles.js';
-import { notesStoreContext } from './main/notes/context.js';
-import './main/notes/elements/all-notes.js';
-import './main/notes/elements/note-detail.js';
-import { NotesStore } from './main/notes/notes-store.js';
+import './lobby/notes/elements/all-notes.js';
+import './lobby/notes/elements/note-detail-for-role.js';
 import './my-contacts.js';
 
 @customElement('home-page')
@@ -34,16 +34,18 @@ export class HomePage extends SignalWatcher(LitElement) {
 	@consume({ context: appClientContext })
 	client!: AppClient;
 
-	@consume({ context: notesStoreContext, subscribe: true })
-	@property({ type: Object })
-	notesStore!: NotesStore;
-
 	routes = new Routes(this, [
 		{
 			path: '',
 			render: () => html`
 				<div style="position: relative; flex: 1">
-					<all-notes> </all-notes>
+					<all-notes
+						style="margin: 16px"
+						@note-role-selected=${(e: CustomEvent) => {
+							this.routes.goto(`note/${e.detail.role}`);
+						}}
+					>
+					</all-notes>
 					<sl-button
 						variant="primary"
 						pill
@@ -53,11 +55,26 @@ export class HomePage extends SignalWatcher(LitElement) {
 							const button = e.target as SlButton;
 							button.loading = true;
 							try {
-								const noteHash = await this.notesStore.client.createNote(
-									'',
-									'',
+								const clone = await this.client.createCloneCell({
+									modifiers: {
+										properties: {
+											progenitors: [encodeHashToBase64(this.client.myPubKey)],
+										},
+										network_seed: `${Math.random()}`,
+									},
+									role_name: 'note',
+								});
+								const notesClient = new NotesClient(
+									this.client,
+									clone.clone_id,
 								);
-								this.routes.goto(`note/${encodeHashToBase64(noteHash)}`);
+								await notesClient.createNote({
+									title: '',
+									body: '',
+									images_hashes: [],
+								});
+
+								this.routes.goto(`note/${clone.clone_id}`);
 							} catch (e) {
 								notifyError(msg('Failed to create note.'));
 								console.error(e);
@@ -77,10 +94,19 @@ export class HomePage extends SignalWatcher(LitElement) {
 			render: params => html` <my-contacts style="flex: 1"> </my-contacts> `,
 		},
 		{
-			path: 'note/:createNoteHash',
+			path: 'note/:roleName',
 			render: params => html`
-				<note-detail .noteHash=${decodeHashFromBase64(params.createNoteHash!)}>
-				</note-detail>
+				<overlay-page
+					.title=${msg('')}
+					icon="back"
+					@close-requested=${() => this.routes.goto('')}
+				>
+					<collaborative-sessions-context role="${params.roleName}">
+						<notes-context role="${params.roleName}">
+							<note-detail-for-role style="flex: 1"> </note-detail-for-role>
+						</notes-context>
+					</collaborative-sessions-context>
+				</overlay-page>
 			`,
 		},
 	]);
