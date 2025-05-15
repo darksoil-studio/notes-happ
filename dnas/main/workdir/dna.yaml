@@ -14,11 +14,6 @@ integrity:
     bundled: <NIX_PACKAGE>
     dependencies: null
     dylib: null
-  - name: notes_integrity
-    hash: null
-    bundled: ../../../target/wasm32-unknown-unknown/release/notes_integrity.wasm
-    dependencies: null
-    dylib: null
 coordinator:
   zomes:
   - name: friends
@@ -33,9 +28,9 @@ coordinator:
     dependencies:
     - name: linked_devices_integrity
     dylib: null
-  - name: notes
+    dylib: null
+  - name: collaborative_sessions
     hash: null
-    bundled: ../../../target/wasm32-unknown-unknown/release/notes.wasm
-    dependencies:
-    - name: notes_integrity
+    bundled: <NIX_PACKAGE>
+    dependencies: null
     dylib: null

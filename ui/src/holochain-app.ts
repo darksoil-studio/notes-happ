@@ -1,3 +1,4 @@
+import '@darksoil-studio/collaborative-sessions-zome/dist/elements/collaborative-sessions-context.js';
 import '@darksoil-studio/file-storage-zome/dist/elements/file-storage-context.js';
 import '@darksoil-studio/friends-zome/dist/elements/friends-context.js';
 import '@darksoil-studio/friends-zome/dist/elements/profile-prompt.js';
@@ -10,6 +11,7 @@ import '@darksoil-studio/profiles-provider/dist/elements/my-profile.js';
 import {
 	AppClient,
 	AppWebsocket,
+	CellType,
 	decodeHashFromBase64,
 } from '@holochain/client';
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
@@ -84,6 +86,28 @@ export class HolochainApp extends SignalWatcher(LitElement) {
 
 		try {
 			this._client = await AppWebsocket.connect();
+			// for (let i = 0; i < 10; i++) {
+			// 	this._client.createCloneCell({
+			// 		modifiers: {
+			// 			network_seed: `${Math.random()}`,
+			// 		},
+			// 		role_name: 'main',
+			// 	});
+			// }
+			const appInfo = await this._client.appInfo();
+
+			for (const cells of appInfo!.cell_info['main']) {
+				if (cells.type === CellType.Cloned && cells.value.enabled) {
+					this._client.disableCloneCell({
+						clone_cell_id: {
+							type: 'dna_hash',
+							value: cells.value.cell_id[0],
+						},
+					});
+				}
+			}
+
+			console.log(await this._client.appInfo());
 		} catch (e: unknown) {
 			this._error = e;
 		} finally {
@@ -117,15 +141,17 @@ export class HolochainApp extends SignalWatcher(LitElement) {
 
 		return html`
 			<app-client-context .client=${this._client}>
-				<notes-context role="main">
-					<linked-devices-context role="main">
-						<friends-context role="main">
-							<profile-prompt style="flex: 1;">
-								${this.router.outlet()}
-							</profile-prompt>
-						</friends-context>
-					</linked-devices-context>
-				</notes-context>
+				<collaborative-sessions-context role="main">
+					<notes-context role="main">
+						<linked-devices-context role="main">
+							<friends-context role="main">
+								<profile-prompt style="flex: 1;">
+									${this.router.outlet()}
+								</profile-prompt>
+							</friends-context>
+						</linked-devices-context>
+					</notes-context>
+				</collaborative-sessions-context>
 			</app-client-context>
 		`;
 	}

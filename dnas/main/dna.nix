@@ -11,13 +11,13 @@
       inputs.holochain-nix-builders.outputs.builders.${system}.dna {
         dnaManifest = ./workdir/dna.yaml;
         zomes = {
-    linked_devices_integrity =
+          collaborative_sessions =
+            inputs'.collaborative-sessions-zome.packages.collaborative_sessions_coordinator;
+          linked_devices_integrity =
             inputs'.linked-devices-zome.packages.linked_devices_integrity;
           linked_devices = inputs'.linked-devices-zome.packages.linked_devices;
           friends_integrity = inputs'.friends-zome.packages.friends_integrity;
           friends = inputs'.friends-zome.packages.friends;
-          notes_integrity = self'.packages.notes_integrity;
-          notes = self'.packages.notes;
         };
       };
   };
