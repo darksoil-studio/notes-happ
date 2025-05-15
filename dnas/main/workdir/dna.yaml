@@ -14,6 +14,11 @@ integrity:
     bundled: <NIX_PACKAGE>
     dependencies: null
     dylib: null
+  - name: notes_integrity
+    hash: null
+    bundled: <NIX_PACKAGE>
+    dependencies: null
+    dylib: null
 coordinator:
   zomes:
   - name: friends
@@ -28,9 +33,14 @@ coordinator:
     dependencies:
     - name: linked_devices_integrity
     dylib: null
-    dylib: null
   - name: collaborative_sessions
     hash: null
     bundled: <NIX_PACKAGE>
     dependencies: null
+    dylib: null
+  - name: notes
+    hash: null
+    bundled: <NIX_PACKAGE>
+    dependencies:
+    - name: notes_integrity
     dylib: null

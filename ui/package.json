@@ -30,7 +30,8 @@
     "lit": "^3.0.0",
     "signal-utils": "^0.21.1",
     "urlpattern-polyfill": "^10.0.0",
-    "@darksoil-studio/collaborative-sessions-zome": "0.500.0-rev.fc8e639783aecb865bc6d9573339e3a9e299c819"
+    "@darksoil-studio/collaborative-sessions-zome": "0.500.0-rev.057c4143f4005b1908b48a352606d88aff23f88b",
+    "@darksoil-studio/notes-zome": "0.500.0-rev.d2781b91d5d2eea63c257762967691e8bcb7602c"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.3",

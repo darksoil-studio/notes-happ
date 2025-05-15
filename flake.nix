@@ -2,6 +2,7 @@
   description = "Template for Holochain app development";
 
   inputs = {
+    notes-zome.url = "github:darksoil-studio/notes-zome/main-0.5";
     collaborative-sessions-zome.url =
       "github:darksoil-studio/collaborative-sessions/main-0.5";
     holonix.url = "github:holochain/holonix/main-0.5";

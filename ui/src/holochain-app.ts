@@ -7,6 +7,7 @@ import '@darksoil-studio/holochain-elements/dist/elements/app-client-context.js'
 import '@darksoil-studio/holochain-elements/dist/elements/display-error.js';
 import { SignalWatcher } from '@darksoil-studio/holochain-signals';
 import '@darksoil-studio/linked-devices-zome/dist/elements/linked-devices-context.js';
+import '@darksoil-studio/notes-zome/dist/elements/notes-context.js';
 import '@darksoil-studio/profiles-provider/dist/elements/my-profile.js';
 import {
 	AppClient,
@@ -25,7 +26,6 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { appStyles } from './app-styles.js';
 import { isMobileContext } from './context.js';
 import './home-page.js';
-import './main/notes/elements/notes-context.js';
 import './overlay-page.js';
 
 export const MOBILE_WIDTH_PX = 600;
@@ -141,8 +141,8 @@ export class HolochainApp extends SignalWatcher(LitElement) {
 
 		return html`
 			<app-client-context .client=${this._client}>
-				<collaborative-sessions-context role="main">
-					<notes-context role="main">
+				<notes-context role="main">
+					<collaborative-sessions-context role="main">
 						<linked-devices-context role="main">
 							<friends-context role="main">
 								<profile-prompt style="flex: 1;">
@@ -150,8 +150,8 @@ export class HolochainApp extends SignalWatcher(LitElement) {
 								</profile-prompt>
 							</friends-context>
 						</linked-devices-context>
-					</notes-context>
-				</collaborative-sessions-context>
+					</collaborative-sessions-context>
+				</notes-context>
 			</app-client-context>
 		`;
 	}
