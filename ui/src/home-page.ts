@@ -8,7 +8,11 @@ import {
 } from '@darksoil-studio/holochain-elements';
 import '@darksoil-studio/holochain-elements/dist/elements/display-error.js';
 import { AsyncResult, SignalWatcher } from '@darksoil-studio/holochain-signals';
-import { EntryRecord } from '@darksoil-studio/holochain-utils';
+import {
+	EntryRecord,
+	HashType,
+	retype,
+} from '@darksoil-studio/holochain-utils';
 import { NotesClient } from '@darksoil-studio/notes-zome';
 import '@darksoil-studio/notes-zome/dist/elements/notes-context.js';
 import '@darksoil-studio/profiles-provider/dist/elements/agent-avatar.js';
@@ -26,6 +30,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 
 import { appStyles } from './app-styles.js';
 import './lobby/notes/elements/all-notes.js';
+import { AllNotes } from './lobby/notes/elements/all-notes.js';
 import './lobby/notes/elements/note-detail-for-role.js';
 import './my-contacts.js';
 
@@ -38,14 +43,20 @@ export class HomePage extends SignalWatcher(LitElement) {
 		{
 			path: '',
 			render: () => html`
-				<div style="position: relative; flex: 1">
-					<all-notes
-						style="margin: 16px"
-						@note-role-selected=${(e: CustomEvent) => {
-							this.routes.goto(`note/${e.detail.role}`);
-						}}
-					>
-					</all-notes>
+				<div style="position: relative; flex: 1; display: flex">
+					<div class="flex-scrollable-parent">
+						<div class="flex-scrollable-container">
+							<div class="flex-scrollable-y">
+								<all-notes
+									style="margin: 16px; min-height: 100%"
+									@note-role-selected=${(e: CustomEvent) => {
+										this.routes.goto(`note/${e.detail.role}`);
+									}}
+								>
+								</all-notes>
+							</div>
+						</div>
+					</div>
 					<sl-button
 						variant="primary"
 						pill
@@ -99,7 +110,32 @@ export class HomePage extends SignalWatcher(LitElement) {
 				<overlay-page
 					.title=${msg('')}
 					icon="back"
-					@close-requested=${() => this.routes.goto('')}
+					@close-requested=${() => {
+						this.routes.goto('');
+						setTimeout(async () => {
+							const client = new NotesClient(this.client, params.roleName!);
+							const notes = await client.getAllNotes();
+
+							const note = notes[0];
+							if (!note) return;
+
+							const revisions = await client.getAllRevisionsForNote(
+								retype(note.target, HashType.ACTION),
+							);
+
+							if (revisions.length < 2) {
+								await this.client.disableCloneCell({
+									clone_cell_id: {
+										type: 'clone_id',
+										value: params.roleName!,
+									},
+								});
+								(
+									this.shadowRoot!.querySelector('all-notes') as AllNotes
+								).clonesChanged();
+							}
+						}, 500);
+					}}
 				>
 					<collaborative-sessions-context role="${params.roleName}">
 						<notes-context role="${params.roleName}">

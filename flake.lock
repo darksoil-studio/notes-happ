@@ -63256,11 +63256,11 @@
         "scaffolding": "scaffolding_76"
       },
       "locked": {
-        "lastModified": 1747319449,
-        "narHash": "sha256-3FqsFVUVbEKa5rr4NX4Uf0+6E8hp14mibcm8G3EF+3Q=",
+        "lastModified": 1747393598,
+        "narHash": "sha256-0G9JGwyueA6zGIHqkAc+yBEfDiSAoPQ2eCJvbKaJkEk=",
         "owner": "darksoil-studio",
         "repo": "notes-zome",
-        "rev": "94299f49fa8429ef9bc3d4e72cfd545304f4a19a",
+        "rev": "e5c161bd3ecd17ab0516d6310b50b48f5790c80a",
         "type": "github"
       },
       "original": {

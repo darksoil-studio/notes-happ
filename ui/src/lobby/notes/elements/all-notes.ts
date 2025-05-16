@@ -14,7 +14,7 @@ import {
 	EntryHash,
 	Record,
 } from '@holochain/client';
-import { SignalWatcher } from '@lit-labs/signals';
+import { Signal, SignalWatcher } from '@lit-labs/signals';
 import { consume } from '@lit/context';
 import { localized, msg } from '@lit/localize';
 import { mdiInformationOutline } from '@mdi/js';
@@ -65,7 +65,8 @@ export class AllNotes extends SignalWatcher(LitElement) {
 						html` <notes-context role="${role}">
 							<note-summary-for-role
 								style=${styleMap({
-									width: this.isMobile ? '100%' : '400px',
+									width: this.isMobile ? '100%' : '300px',
+									height: '200px',
 								})}
 								@click=${() =>
 									this.dispatchEvent(
@@ -84,9 +85,17 @@ export class AllNotes extends SignalWatcher(LitElement) {
 		`;
 	}
 
+	clonesChanged() {
+		this.s.set(Date.now());
+	}
+
+	s = new Signal.State(0);
 	notesRoles = new AC(async () => {
+		this.s.get();
 		const appInfo = await this.client.appInfo();
-		return appInfo!.cell_info['note'].filter(c => c.type === CellType.Cloned);
+		return appInfo!.cell_info['note']
+			.filter(c => c.type === CellType.Cloned)
+			.filter(c => c.value.enabled);
 	});
 
 	render() {

@@ -90,8 +90,8 @@ importers:
         specifier: 0.500.0-rev.5a9b78aed28fcc3a2cfcb62441440301ab9b80fb
         version: 0.500.0-rev.5a9b78aed28fcc3a2cfcb62441440301ab9b80fb(@floating-ui/utils@0.2.9)(@types/react@19.0.12)
       '@darksoil-studio/notes-zome':
-        specifier: 0.500.0-rev.94299f49fa8429ef9bc3d4e72cfd545304f4a19a
-        version: 0.500.0-rev.94299f49fa8429ef9bc3d4e72cfd545304f4a19a(@floating-ui/utils@0.2.9)(@types/react@19.0.12)
+        specifier: 0.500.0-rev.e5c161bd3ecd17ab0516d6310b50b48f5790c80a
+        version: 0.500.0-rev.e5c161bd3ecd17ab0516d6310b50b48f5790c80a(@floating-ui/utils@0.2.9)(@types/react@19.0.12)
       '@darksoil-studio/private-event-sourcing-zome':
         specifier: 0.500.0-rev.b4aae52d1b584fd6a50704663b3486552a3e98a7
         version: 0.500.0-rev.b4aae52d1b584fd6a50704663b3486552a3e98a7(@floating-ui/utils@0.2.9)(@types/react@19.0.12)
@@ -277,8 +277,8 @@ packages:
   '@darksoil-studio/linked-devices-zome@0.500.0-rev.5a9b78aed28fcc3a2cfcb62441440301ab9b80fb':
     resolution: {integrity: sha512-kvEQdzvH0ZfhB4MPLni0JMi9lkwPS62IPCxjfXJarVudUNa4zpoSqMcsdaG7zdiVhxjXlNrEi3VPJVINsJkw5Q==}
 
-  '@darksoil-studio/notes-zome@0.500.0-rev.94299f49fa8429ef9bc3d4e72cfd545304f4a19a':
-    resolution: {integrity: sha512-6w6kHJlWrx9Wpu+m8Ey/PmVCmpZNwj0pEC9xJWImuLG6e8T0d93FLuIw429l/xxgWdX5sOTpTCBdClDm1KfYcA==}
+  '@darksoil-studio/notes-zome@0.500.0-rev.e5c161bd3ecd17ab0516d6310b50b48f5790c80a':
+    resolution: {integrity: sha512-bj5IKtK74ZrJ5RNn+r9OjbDqkfuYCMt4X4hp22W2iZYDmWBZzgP3Pcr9tjg9XcTcGtYZNXXDQU6+5/JgKkLCJQ==}
 
   '@darksoil-studio/private-event-sourcing-zome@0.500.0-rev.b4aae52d1b584fd6a50704663b3486552a3e98a7':
     resolution: {integrity: sha512-t6v9l/pWN1gWeSbB1aH021HR7sj7NqcuG/y8VBALlOJUONddOXPyIO6nzfZdNGRApAAh5GmFI/bckcNxnpMhEw==}
@@ -2654,7 +2654,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@darksoil-studio/notes-zome@0.500.0-rev.94299f49fa8429ef9bc3d4e72cfd545304f4a19a(@floating-ui/utils@0.2.9)(@types/react@19.0.12)':
+  '@darksoil-studio/notes-zome@0.500.0-rev.e5c161bd3ecd17ab0516d6310b50b48f5790c80a(@floating-ui/utils@0.2.9)(@types/react@19.0.12)':
     dependencies:
       '@automerge/automerge': 2.2.9
       '@automerge/prosemirror': 0.0.13

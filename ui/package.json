@@ -20,7 +20,7 @@
     "@darksoil-studio/holochain-signals": "^0.500.0",
     "@darksoil-studio/holochain-utils": "^0.500.0",
     "@darksoil-studio/linked-devices-zome": "0.500.0-rev.5a9b78aed28fcc3a2cfcb62441440301ab9b80fb",
-    "@darksoil-studio/notes-zome": "0.500.0-rev.94299f49fa8429ef9bc3d4e72cfd545304f4a19a",
+    "@darksoil-studio/notes-zome": "0.500.0-rev.e5c161bd3ecd17ab0516d6310b50b48f5790c80a",
     "@darksoil-studio/private-event-sourcing-zome": "0.500.0-rev.b4aae52d1b584fd6a50704663b3486552a3e98a7",
     "@darksoil-studio/profiles-provider": "^0.500.0",
     "@holochain/client": "^0.19.0",
