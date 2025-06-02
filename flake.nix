@@ -2,6 +2,7 @@
   description = "Template for Holochain app development";
 
   inputs = {
+    membrane-invitations-zome.url = "github:darksoil-studio/membrane-invitations-zome/main-0.5";
     notes-zome.url = "github:darksoil-studio/notes-zome/main-0.5";
     collaborative-sessions-zome.url =
       "github:darksoil-studio/collaborative-sessions/main-0.5";
@@ -14,7 +15,8 @@
     holochain-nix-builders.url =
       "github:darksoil-studio/holochain-nix-builders/main-0.5";
     playground.url = "github:darksoil-studio/holochain-playground/main-0.5";
-    p2p-shipyard.url = "github:darksoil-studio/p2p-shipyard/main-0.5";
+    tauri-plugin-holochain.url =
+      "github:darksoil-studio/tauri-plugin-holochain/main-0.5";
 
     file-storage.url = "github:darksoil-studio/file-storage/main-0.5";
     friends-zome.url = "github:darksoil-studio/friends-zome/main-0.5";
@@ -49,7 +51,7 @@
           packages = [
             inputs'.holochain-nix-builders.packages.holochain
             inputs'.scaffolding.packages.hc-scaffold-happ
-            inputs'.p2p-shipyard.packages.hc-pilot
+            inputs'.tauri-plugin-holochain.packages.hc-pilot
             inputs'.playground.packages.hc-playground
           ];
         };

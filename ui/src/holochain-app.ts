@@ -1,3 +1,4 @@
+//@ts-ignore
 import wasmUrl from '@automerge/automerge/automerge.wasm?url';
 // Note the `/slim` suffixes
 import { next as Automerge } from '@automerge/automerge/slim';
@@ -10,6 +11,7 @@ import '@darksoil-studio/holochain-elements/dist/elements/app-client-context.js'
 import '@darksoil-studio/holochain-elements/dist/elements/display-error.js';
 import { SignalWatcher } from '@darksoil-studio/holochain-signals';
 import '@darksoil-studio/linked-devices-zome/dist/elements/linked-devices-context.js';
+import '@darksoil-studio/membrane-invitations-zome/dist/elements/membrane-invitations-context.js';
 import '@darksoil-studio/notes-zome/dist/elements/notes-context.js';
 import '@darksoil-studio/profiles-provider/dist/elements/my-profile.js';
 import {
@@ -122,13 +124,15 @@ export class HolochainApp extends SignalWatcher(LitElement) {
 
 		return html`
 			<app-client-context .client=${this._client}>
-				<linked-devices-context role="lobby">
-					<friends-context role="lobby">
-						<profile-prompt style="flex: 1;">
-							${this.router.outlet()}
-						</profile-prompt>
-					</friends-context>
-				</linked-devices-context>
+				<membrane-invitations-context role="lobby">
+					<linked-devices-context role="lobby">
+						<friends-context role="lobby">
+							<profile-prompt style="flex: 1;">
+								${this.router.outlet()}
+							</profile-prompt>
+						</friends-context>
+					</linked-devices-context>
+				</membrane-invitations-context>
 			</app-client-context>
 		`;
 	}

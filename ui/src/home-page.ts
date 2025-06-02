@@ -44,19 +44,13 @@ export class HomePage extends SignalWatcher(LitElement) {
 			path: '',
 			render: () => html`
 				<div style="position: relative; flex: 1; display: flex">
-					<div class="flex-scrollable-parent">
-						<div class="flex-scrollable-container">
-							<div class="flex-scrollable-y">
-								<all-notes
-									style="margin: 16px; min-height: 100%"
-									@note-role-selected=${(e: CustomEvent) => {
-										this.routes.goto(`note/${e.detail.role}`);
-									}}
-								>
-								</all-notes>
-							</div>
-						</div>
-					</div>
+					<all-notes
+						style="flex: 1"
+						@note-role-selected=${(e: CustomEvent) => {
+							this.routes.goto(`note/${e.detail.role.replace('.', '-')}`);
+						}}
+					>
+					</all-notes>
 					<sl-button
 						variant="primary"
 						pill
@@ -85,7 +79,7 @@ export class HomePage extends SignalWatcher(LitElement) {
 									images_hashes: [],
 								});
 
-								this.routes.goto(`note/${clone.clone_id}`);
+								this.routes.goto(`note/${clone.clone_id.replace('.', '-')}`);
 							} catch (e) {
 								notifyError(msg('Failed to create note.'));
 								console.error(e);
@@ -102,48 +96,61 @@ export class HomePage extends SignalWatcher(LitElement) {
 		},
 		{
 			path: 'contacts',
-			render: params => html` <my-contacts style="flex: 1"> </my-contacts> `,
-		},
-		{
-			path: 'note/:roleName',
 			render: params => html`
 				<overlay-page
-					.title=${msg('')}
+					.title=${msg('Contacts')}
 					icon="back"
 					@close-requested=${() => {
 						this.routes.goto('');
-						setTimeout(async () => {
-							const client = new NotesClient(this.client, params.roleName!);
-							const notes = await client.getAllNotes();
-
-							const note = notes[0];
-							if (!note) return;
-
-							const revisions = await client.getAllRevisionsForNote(
-								retype(note.target, HashType.ACTION),
-							);
-
-							if (revisions.length < 2) {
-								await this.client.disableCloneCell({
-									clone_cell_id: {
-										type: 'clone_id',
-										value: params.roleName!,
-									},
-								});
-								(
-									this.shadowRoot!.querySelector('all-notes') as AllNotes
-								).clonesChanged();
-							}
-						}, 500);
 					}}
 				>
-					<collaborative-sessions-context role="${params.roleName}">
-						<notes-context role="${params.roleName}">
-							<note-detail-for-role style="flex: 1"> </note-detail-for-role>
-						</notes-context>
-					</collaborative-sessions-context>
+					<my-contacts style="flex: 1; margin: 16px"> </my-contacts>
 				</overlay-page>
 			`,
+		},
+		{
+			path: 'note/:roleName',
+			render: params => {
+				const roleName = params.roleName!.replace('-', '.');
+				return html`
+					<overlay-page
+						.title=${msg('')}
+						icon="back"
+						@close-requested=${() => {
+							this.routes.goto('');
+							setTimeout(async () => {
+								const client = new NotesClient(this.client, roleName);
+								const notes = await client.getAllNotes();
+
+								const note = notes[0];
+								if (!note) return;
+
+								const revisions = await client.getAllRevisionsForNote(
+									retype(note.target, HashType.ACTION),
+								);
+
+								if (revisions.length < 2) {
+									await this.client.disableCloneCell({
+										clone_cell_id: {
+											type: 'clone_id',
+											value: roleName!,
+										},
+									});
+									(
+										this.shadowRoot!.querySelector('all-notes') as AllNotes
+									).clonesChanged();
+								}
+							}, 500);
+						}}
+					>
+						<collaborative-sessions-context role="${roleName}">
+							<notes-context role="${roleName}">
+								<note-detail-for-role style="flex: 1"> </note-detail-for-role>
+							</notes-context>
+						</collaborative-sessions-context>
+					</overlay-page>
+				`;
+			},
 		},
 	]);
 
@@ -154,6 +161,11 @@ export class HomePage extends SignalWatcher(LitElement) {
 					<span class="title" style="flex: 1">${msg('Notes')}</span>
 
 					<div class="row" style="gap: 16px">
+						<sl-button
+							variant="primary"
+							@click=${() => this.routes.goto('contacts')}
+							>${msg('Contacts')}
+						</sl-button>
 						<agent-avatar
 							@click=${() =>
 								this.dispatchEvent(

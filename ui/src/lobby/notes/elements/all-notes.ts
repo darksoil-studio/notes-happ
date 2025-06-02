@@ -59,28 +59,37 @@ export class AllNotes extends SignalWatcher(LitElement) {
 		}
 
 		return html`
-			<div class="row" style="gap: 16px; flex: 1; flex-wrap: wrap">
-				${roles.map(
-					role =>
-						html` <notes-context role="${role}">
-							<note-summary-for-role
-								style=${styleMap({
-									width: this.isMobile ? '100%' : '300px',
-									height: '200px',
-								})}
-								@click=${() =>
-									this.dispatchEvent(
-										new CustomEvent('note-role-selected', {
-											bubbles: true,
-											composed: true,
-											detail: {
-												role,
-											},
-										}),
-									)}
-							></note-summary-for-role
-						></notes-context>`,
-				)}
+			<div class="flex-scrollable-parent">
+				<div class="flex-scrollable-container">
+					<div class="flex-scrollable-y">
+						<div
+							class="row"
+							style="gap: 16px; flex: 1; flex-wrap: wrap; margin: 16px"
+						>
+							${roles.map(
+								role =>
+									html` <notes-context role="${role}">
+										<note-summary-for-role
+											style=${styleMap({
+												width: this.isMobile ? '100%' : '300px',
+												height: '200px',
+											})}
+											@click=${() =>
+												this.dispatchEvent(
+													new CustomEvent('note-role-selected', {
+														bubbles: true,
+														composed: true,
+														detail: {
+															role,
+														},
+													}),
+												)}
+										></note-summary-for-role
+									></notes-context>`,
+							)}
+						</div>
+					</div>
+				</div>
 			</div>
 		`;
 	}
@@ -126,4 +135,17 @@ export class AllNotes extends SignalWatcher(LitElement) {
 			}
 		`,
 	];
+}
+// @ts-expect-error This does not exist outside of polyfill which this is doing
+if (typeof Promise.withResolvers === 'undefined') {
+	if (window)
+		// @ts-expect-error This does not exist outside of polyfill which this is doing
+		window.Promise.withResolvers = function () {
+			let resolve, reject;
+			const promise = new Promise((res, rej) => {
+				resolve = res;
+				reject = rej;
+			});
+			return { promise, resolve, reject };
+		};
 }

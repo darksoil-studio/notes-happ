@@ -14,6 +14,11 @@ integrity:
     bundled: <NIX_PACKAGE>
     dependencies: null
     dylib: null
+  - name: membrane_invitations_integrity
+    hash: null
+    bundled: <NIX_PACKAGE>
+    dependencies: null
+    dylib: null
 coordinator:
   zomes:
   - name: friends
@@ -27,4 +32,10 @@ coordinator:
     bundled: <NIX_PACKAGE>
     dependencies:
     - name: linked_devices_integrity
+    dylib: null
+  - name: membrane_invitations
+    hash: null
+    bundled: <NIX_PACKAGE>
+    dependencies:
+    - name: membrane_invitations_integrity
     dylib: null

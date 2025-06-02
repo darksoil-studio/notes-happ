@@ -13,15 +13,15 @@
   },
   "dependencies": {
     "@automerge/automerge": "^2.2.9",
-    "@darksoil-studio/collaborative-sessions-zome": "0.500.0-rev.057c4143f4005b1908b48a352606d88aff23f88b",
-    "@darksoil-studio/file-storage-zome": "0.500.0-rev.b02d49d077bf9e4bb1caa967345ccea9ca540a65",
-    "@darksoil-studio/friends-zome": "0.500.0-rev.ea22fc40334761fadc44879f19f7c1fc64c17a99",
+    "@darksoil-studio/collaborative-sessions-zome": "0.500.0-rev.e7c62a8e2c6c3ffe663fb71848d961f85bb97a83",
+    "@darksoil-studio/file-storage-zome": "0.500.0-rev.27308361df4709f7cd7e2bc441aeb34154b6c91c",
+    "@darksoil-studio/friends-zome": "0.500.0-rev.0f927d93ece3a1a93487ec3cbb6c1cbfc339c00a",
     "@darksoil-studio/holochain-elements": "^0.500.0",
     "@darksoil-studio/holochain-signals": "^0.500.0",
     "@darksoil-studio/holochain-utils": "^0.500.0",
-    "@darksoil-studio/linked-devices-zome": "0.500.0-rev.5a9b78aed28fcc3a2cfcb62441440301ab9b80fb",
-    "@darksoil-studio/notes-zome": "0.500.0-rev.e5c161bd3ecd17ab0516d6310b50b48f5790c80a",
-    "@darksoil-studio/private-event-sourcing-zome": "0.500.0-rev.b4aae52d1b584fd6a50704663b3486552a3e98a7",
+    "@darksoil-studio/linked-devices-zome": "0.500.0-rev.f90fab7ba99d5d9b56db028a1fa6047b83e7a9bc",
+    "@darksoil-studio/notes-zome": "0.500.0-rev.19261a5dc727d63293a3ae8040b773d9c9d665f1",
+    "@darksoil-studio/private-event-sourcing-zome": "0.500.0-rev.21d9013de4462cb892e490c7125fe1b00e2cbab9",
     "@darksoil-studio/profiles-provider": "^0.500.0",
     "@holochain/client": "^0.19.0",
     "@lit-labs/observers": "^2.0.5",
@@ -33,7 +33,8 @@
     "@shoelace-style/shoelace": "^2.11.0",
     "lit": "^3.0.0",
     "signal-utils": "^0.21.1",
-    "urlpattern-polyfill": "^10.0.0"
+    "urlpattern-polyfill": "^10.0.0",
+    "@darksoil-studio/membrane-invitations-zome": "0.500.0-rev.298620b0829c6191f51524876c3e7119de1b608a"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.3",

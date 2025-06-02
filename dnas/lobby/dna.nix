@@ -11,6 +11,8 @@
       inputs.holochain-nix-builders.outputs.builders.${system}.dna {
         dnaManifest = ./workdir/dna.yaml;
         zomes = {
+          membrane_invitations_integrity = inputs'.membrane-invitations-zome.packages.membrane_invitations_integrity;
+          membrane_invitations = inputs'.membrane-invitations-zome.packages.membrane_invitations;
           linked_devices_integrity =
             inputs'.linked-devices-zome.packages.linked_devices_integrity;
           linked_devices = inputs'.linked-devices-zome.packages.linked_devices;

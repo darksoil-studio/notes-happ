@@ -7,14 +7,14 @@ import { FriendRequestQrCode } from '@darksoil-studio/friends-zome/dist/elements
 import '@darksoil-studio/friends-zome/dist/elements/friend-requests.js';
 import '@darksoil-studio/friends-zome/dist/elements/manual-friend-request.js';
 import '@darksoil-studio/friends-zome/dist/elements/my-friends.js';
+import { SignalWatcher } from '@darksoil-studio/holochain-signals';
 import { consume } from '@lit/context';
 import { localized, msg } from '@lit/localize';
 import '@shoelace-style/shoelace/dist/components/dialog/dialog.js';
-import { SignalWatcher } from '@darksoil-studio/holochain-signals';
 import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { appStyles } from './app-styles';
+import { appStyles } from './app-styles.js';
 
 @localized()
 @customElement('my-contacts')
